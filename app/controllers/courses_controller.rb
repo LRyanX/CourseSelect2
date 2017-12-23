@@ -1,7 +1,7 @@
 class CoursesController < ApplicationController
 
-  before_action :student_logged_in, only: [:select, :quit, :list, :selectd]
-  before_action :teacher_logged_in, only: [:new, :create, :edit, :destroy, :update, :open, :close]#add open by qiao
+  before_action :student_logged_in, only: [:select, :quit, :selectd]
+  before_action :teacher_logged_in, only: [:new, :create, :edit, :destroy, :update, :open, :close, :advselect]#add open by qiao
   before_action :logged_in, only: :index
   before_action :credit 
   #-------------------------for teachers----------------------
@@ -55,12 +55,31 @@ class CoursesController < ApplicationController
     redirect_to courses_path, flash: flash
   end
 
+
+  def advselect
+    @course=Course.find_by_id(params[:id])
+    current_user.students.each do |student|
+      student.student_courses<<@course
+    end
+
+    flash={:suceess => "成功选择课程: #{@course.name}"}
+    redirect_to courses_path, flash: flash
+  end
+
   #-------------------------for students----------------------
 
   def list
     #-------QiaoCode--------
     @course=Course.where(:open=>true)
-    @course=@course-current_user.courses
+    if student_logged_in?
+       @adv_course=current_user.student_courses-current_user.courses
+       @course=@course-current_user.courses-current_user.student_courses
+    end
+    if teacher_logged_in?
+       if current_user.students.length > 0
+          @course=@course-current_user.students[0].student_courses
+       end
+    end
     tmp=[]
     @course.each do |course|
       if course.open==true

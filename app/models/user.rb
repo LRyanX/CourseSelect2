@@ -4,11 +4,12 @@ class User < ActiveRecord::Base
   attr_accessor :remember_token
   validates :name, presence: true, length: {maximum: 50}
   validates :password, presence: true, length: {minimum: 6}, allow_nil: true
-
+  
   has_many :grades
   has_many :courses, through: :grades
-
-  has_many :users
+  
+  has_many :student_courses, class_name: "Course", foreign_key: :student_id
+  has_many :students, class_name: "User", foreign_key: :teacher_id
 
   has_many :teaching_courses, class_name: "Course", foreign_key: :teacher_id
 

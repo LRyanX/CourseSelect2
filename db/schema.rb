@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171220062918) do
+ActiveRecord::Schema.define(version: 20171223021731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,8 +31,9 @@ ActiveRecord::Schema.define(version: 20171220062918) do
     t.integer  "teacher_id"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
-    t.boolean  "open",          default: false
+    t.boolean  "open",          default: true
     t.boolean  "is_degree",     default: false
+    t.integer  "student_id"
   end
 
   create_table "grades", force: :cascade do |t|
@@ -60,6 +61,7 @@ ActiveRecord::Schema.define(version: 20171220062918) do
     t.datetime "updated_at",                      null: false
     t.integer  "degree_credit",   default: 0
     t.integer  "sum_credit",      default: 0
+    t.integer  "teacher_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
