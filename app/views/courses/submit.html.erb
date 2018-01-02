@@ -1,0 +1,56 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-2">
+      <%= render "shared/sidenav" %>
+
+    </div>
+    <div class="col-sm-10">
+      <div class="panel panel-primary filterable">
+        <div class="panel-heading">
+          <h3 class="panel-title">待提交课程</h3>
+        </div>
+        <div class="panel-body" style="min-height: 450px">
+<th>当前共选择了：<%= @course.length %>门课程，共： <%= @credit %> 学分，其中学位课： <%= @degree_credit %> 学分 </th>
+          <table class="table table-striped table-hover">
+            <thead>
+            
+            <tr>
+
+              <th>课程编号</th>
+              <th>课程名称</th>
+              <th>课时/学分</th>
+              <th>课程时间</th>
+              <th>学位课</th>
+              <th>考试方式</th>
+              <th>主讲教师</th>
+            </tr>
+            </thead>
+            <tbody>
+	    <% @i=0 %>
+            <% @course.each do |course| %>
+		
+                <tr>
+  
+                  <td><%= course.course_code %></td>
+                  <td><%= course.name %></td>
+                  <td><%= course.credit %></td>
+	          <td><%= course.course_time %></td>
+                  <% if course.is_degree %>
+                        <td>是</td>
+                  <% else %>
+                        <td>否</td>
+                  <% end %>
+                  <td><%= course.exam_type %></td>
+                  <td><%= course.teacher.name %></td>
+  		  <td><%= link_to "删除", deletefromsubmit_course_path(course), class: 'btn-sm btn-danger' %></td>
+                </tr>
+            <% end %>
+	    <tr><td><%= link_to "提交选课",gotosubmit_course_path(current_user.courses),class:'btn-sm btn-info'%> </td> </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

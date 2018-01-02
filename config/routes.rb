@@ -24,9 +24,13 @@ Rails.application.routes.draw do
       get :quit
       get :open
       get :close
+			get :submit
+			get :gotosubmit
+			get :deletefromsubmit
     end
     collection do
       get :list
+			get :submit
     end
   end
 
