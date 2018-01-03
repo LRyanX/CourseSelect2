@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       get :quit
       get :open
       get :close
+      get :advselect
 			get :submit
 			get :gotosubmit
 			get :deletefromsubmit

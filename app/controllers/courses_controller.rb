@@ -58,12 +58,17 @@ class CoursesController < ApplicationController
 
   def advselect
     @course=Course.find_by_id(params[:id])
-    current_user.students.each do |student|
-      student.student_courses<<@course
-    end
+    if current_user.students.length == 0
+       flash={:warning => "您尚未拥有学生，无法进行推荐！"}
+       redirect_to courses_path, flash: flash
+    else
+      current_user.students.each do |student|
+        student.student_courses<<@course
+      end
 
-    flash={:suceess => "成功选择课程: #{@course.name}"}
-    redirect_to courses_path, flash: flash
+      flash={:suceess => "成功选择课程: #{@course.name}"}
+      redirect_to courses_path, flash: flash
+    end
   end
 
   #-------------------------for students----------------------
