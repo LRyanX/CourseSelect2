@@ -76,14 +76,13 @@ class CoursesController < ApplicationController
 
     if student_logged_in?
        @adv_course=current_user.student_courses-current_user.courses
-       @course=@course-current_user.courses-@@submit_courses
+       @course=@course-current_user.courses-current_user.student_courses-@@submit_courses
     end
     if teacher_logged_in?
        if current_user.students.length > 0
           @course=@course-current_user.students[0].student_courses
        end
-    end
-
+		end
     tmp=[]
     @course.each do |course|
       if course.open==true
@@ -426,7 +425,7 @@ class CoursesController < ApplicationController
 		if @i > 1
 			for i in 0..@i-1
 				for j in i+1..@i-1
-					if ((@course_day[i]==@course_day[j])  and  (((@course_start[i]>=@course_start[j])and(@course_start[i]<@course_end[j])) or ((@course_end[i]>@course_start[j])and(@course_end[i]<=@course_end[j]))))
+					if ((@course_day[i]==@course_day[j])  and  (((@course_start[i]>@course_start[j])and(@course_start[i]<@course_end[j])) or ((@course_end[i]>@course_start[j])and(@course_end[i]<@course_end[j]))))
 						@conflict=1
 					end
 				end
@@ -442,9 +441,26 @@ class CoursesController < ApplicationController
 					current_user.degree_credit += credit
 				end
 			end
+			
 			@@submit_courses=[]
 			current_user.unsubmit_num=0
 			current_user.save(:validate => false)
+#-------------------发送邮件部分-----------------------------------------------------
+			require 'mail'
+			smtp = { :address => 'smtp.163.com', :port => 25, :domain => '163.com', \
+			 				 :user_name => 'ucas_courseselect@163.com', :password => 'password123',\
+  						 :enable_starttls_auto => true, :openssl_verify_mode => 'none' }
+			Mail.defaults { delivery_method :smtp, smtp }
+			mail = Mail.new do
+	  	from 'ucas_courseselect@163.com'
+		  to 'ucas_student_1@163.com'
+			subject '选课通知'
+			body '您已成功提交选课，可以在课程网站中查询您的最新课表！'
+			#add_file File.expand_path("./mail2.rb")
+			end
+			mail.deliver!
+#------------------------------------------------------------------------------------
+
 			flash={:suceess => "成功提交选课"}    
 	  	redirect_to courses_path, flash: flash
 		end
