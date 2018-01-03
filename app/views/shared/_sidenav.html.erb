@@ -82,6 +82,7 @@
             <li class="list-group-item">
               <%= link_to schedule_courses_path do %>
                   <span class="glyphicon glyphicon-chevron-right"></span> 查看课表
+		  <span class="label label-info pull-right"><%= current_user.courses.length %></span>	
               <% end %>
             </li>
 

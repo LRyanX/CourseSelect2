@@ -76,7 +76,7 @@ class CoursesController < ApplicationController
 
     if student_logged_in?
        @adv_course=current_user.student_courses-current_user.courses
-       @course=@course-current_user.courses-current_user.student_courses-@@submit_courses
+       @course=@course-current_user.courses-@@submit_courses
     end
     if teacher_logged_in?
        if current_user.students.length > 0

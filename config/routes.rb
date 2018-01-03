@@ -32,7 +32,8 @@ Rails.application.routes.draw do
       get :list
 			get :submit
       get :advselect
-    end
+    	get :schedule
+		end
   end
 
   resources :grades, only: [:index, :update]
