@@ -31,11 +31,17 @@ Rails.application.routes.draw do
     collection do
       get :list
 			get :submit
+      get :advselect
     end
   end
 
   resources :grades, only: [:index, :update]
-  resources :users
+  resources :users do
+    collection do
+      get :list
+      get :listc
+    end
+  end
 
   get 'sessions/login' => 'sessions#new'
   post 'sessions/login' => 'sessions#create'

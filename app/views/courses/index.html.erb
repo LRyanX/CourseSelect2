@@ -15,11 +15,12 @@
           <% end %>
         </div> 
 	<div class="panel-body" style="min-height: 450px">          
-        <tr><th>总共选修课程： <%= current_user.sum_credit %> 学分，其中学位课： <%= current_user.degree_credit %> 学分 </tr></th>
+        <% if student_logged_in? %>
+            <tr><th>总共选修课程： <%= current_user.sum_credit %> 学分，其中学位课： <%= current_user.degree_credit %> 学分 </tr></th>
+            <% end %>
         <div class="panel-body">
           <table class="table table-responsive table-condensed table-hover">
             <thead>
-
             <tr>
               <th>课程编号</th>
               <th>课程名称</th>
