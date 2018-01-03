@@ -9,7 +9,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to root_url, flash: {success: "新账号注册成功,请登陆"}
+      current_user.students<<@user
+      redirect_to courses_path, flash: {success: "新同学添加成功"}
     else
       flash[:warning] = "账号信息填写有误,请重试"
       render 'new'
@@ -34,6 +35,19 @@ class UsersController < ApplicationController
     @user = User.find_by_id(params[:id])
     @user.destroy
     redirect_to users_path(new: false), flash: {success: "用户删除"}
+  end
+
+  def list
+     @student = current_user.students
+  end
+
+  def listc
+     if current_user.students.length > 0
+        @advcourse=current_user.students[0].student_courses
+     else
+        redirect_to courses_path, flash: {:warning => "您当前没有学生，无法进行推荐课程功能！"}
+       
+     end
   end
 
 

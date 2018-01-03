@@ -13,6 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20180102151154) do
 
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,6 +35,7 @@ ActiveRecord::Schema.define(version: 20180102151154) do
     t.boolean  "open",              default: true
     t.boolean  "is_degree",         default: false
     t.boolean  "is_already_submit", default: false
+    t.integer  "student_id"
   end
 
   create_table "grades", force: :cascade do |t|
@@ -62,6 +64,8 @@ ActiveRecord::Schema.define(version: 20180102151154) do
     t.integer  "degree_credit",   default: 0
     t.integer  "sum_credit",      default: 0
     t.integer  "unsubmit_num",    default: 0
+    t.integer  "teacher_id"
+
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

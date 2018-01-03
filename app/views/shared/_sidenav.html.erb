@@ -32,6 +32,29 @@
                   <span class="glyphicon glyphicon-chevron-right"></span> 创建新课程
               <% end %>
             </li>
+            <li class="list-group-item">
+              <%= link_to list_courses_path do %>
+                  <span class="glyphicon glyphicon-chevron-right"></span> 建议课程
+                  <span class="label label-info pull-right"><%= (Course.where(:open => true)-current_user.courses).length %></span>
+              <% end %>
+            </li>
+            <li class="list-group-item">
+              <%= link_to listc_users_path do %>
+                  <span class="glyphicon glyphicon-chevron-right"></span> 已建议课程
+                 
+              <% end %>
+            </li>
+            <li class="list-group-item">
+              <%= link_to new_user_path do %>
+                  <span class="glyphicon glyphicon-chevron-right"></span> 添加学生
+              <% end %>
+            </li>
+            <li class="list-group-item">
+              <%= link_to list_users_path do %>
+                  <span class="glyphicon glyphicon-chevron-right"></span> 已选学生
+                  <span class="label label-info pull-right"><%= current_user.students.length %></span>
+              <% end %>
+            </li>
         <% end %>
 
         <% if student_logged_in? %>
@@ -53,6 +76,12 @@
               <%= link_to courses_path do %>
                   <span class="glyphicon glyphicon-chevron-right"></span> 已选课程
                   <span class="label label-info pull-right"><%= current_user.courses.length %></span>
+              <% end %>
+            </li>
+
+            <li class="list-group-item">
+              <%= link_to schedule_courses_path do %>
+                  <span class="glyphicon glyphicon-chevron-right"></span> 查看课表
               <% end %>
             </li>
 

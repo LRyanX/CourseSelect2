@@ -1,0 +1,48 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-2">
+      <%= render "shared/sidenav" %>
+
+    </div>
+    <div class="col-sm-10">
+     
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+
+          <h3 class="panel-title">已推荐课程</h3>
+
+
+        </div>
+        <div class="panel-body" style="min-height: 450px">
+          <table class="table table-striped table-hover">
+            <thead>
+
+            <tr>
+              <th>课程编号</th>
+              <th>课程名</th>
+              <th>课程类型</th>
+              <th>授课类型</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <% @advcourse.each do |ac| %>
+                <tr>
+                  <td><%= ac.course_code %></td>
+                  <td><%= ac.name %></td>
+                  <td><%= ac.course_type %></td>
+                  <td><%= ac.teaching_type  %></td>
+
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
