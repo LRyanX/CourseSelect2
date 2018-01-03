@@ -13,18 +13,19 @@
           <% end %>
           <% if student_logged_in? %><h3 class="panel-title">已选课程</h3>
           <% end %>
-        </div>
-
+        </div> 
+	<div class="panel-body" style="min-height: 450px">          
+        <% if student_logged_in? %>
+            <tr><th>总共选修课程： <%= current_user.sum_credit %> 学分，其中学位课： <%= current_user.degree_credit %> 学分 </tr></th>
+            <% end %>
         <div class="panel-body">
           <table class="table table-responsive table-condensed table-hover">
             <thead>
-            <% if student_logged_in? %>
-            <tr><th>总共选修课程： <%= current_user.sum_credit %> 学分，其中学位课： <%= current_user.degree_credit %> 学分 </tr></th>
-            <% end %>
             <tr>
               <th>课程编号</th>
               <th>课程名称</th>
               <th>课时/学分</th>
+	      <th>上课时间</th>
               <th>学位课</th>
               <th>考试方式</th>
               <th>主讲教师</th>
@@ -37,6 +38,7 @@
                   <td><%= course.course_code %></td>
                   <td><%= course.name %></td>
                   <td><%= course.credit %></td>
+                  <td><%= course.course_time %></td>
                   <% if course.is_degree %>
                         <td>是</td>
                   <% else %>

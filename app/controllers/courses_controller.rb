@@ -67,19 +67,23 @@ class CoursesController < ApplicationController
   end
 
   #-------------------------for students----------------------
+	
+	@@submit_courses=[]
 
   def list
     #-------QiaoCode--------
     @course=Course.where(:open=>true)
+
     if student_logged_in?
        @adv_course=current_user.student_courses-current_user.courses
-       @course=@course-current_user.courses-current_user.student_courses
+       @course=@course-current_user.courses-@@submit_courses
     end
     if teacher_logged_in?
        if current_user.students.length > 0
           @course=@course-current_user.students[0].student_courses
        end
     end
+
     tmp=[]
     @course.each do |course|
       if course.open==true
@@ -304,25 +308,22 @@ class CoursesController < ApplicationController
 
 
     end
-    
-
 
   end
 
   def select
+
     @course=Course.find_by_id(params[:id])
-    current_user.courses<<@course
+		@@submit_courses<<@course
+		
+		current_user.unsubmit_num +=1
+		current_user.save(:validate => false)
 
-    credit = @course.credit.split("/")[1].to_i
-    current_user.sum_credit += credit
-
-    current_user.save(:validate => false)
-
-    flash={:suceess => "成功选择课程: #{@course.name}"}
-    redirect_to courses_path, flash: flash
+    flash={:suceess => "课程: #{@course.name}成功加入待提交选课"}
+    redirect_to list_courses_path, flash: flash
   end
 
-  def quit
+  def quit #--------------------------------------------------------------------从已选课表中退选对应课程
     @course=Course.find_by_id(params[:id])
     current_user.courses.delete(@course)
 
@@ -341,24 +342,119 @@ class CoursesController < ApplicationController
     flash={:success => "成功退选课程: #{@course.name}"}
     redirect_to courses_path, flash: flash
   end
-  
-  def selectd
-    @course=Course.find_by_id(params[:id])
-    current_user.courses<<@course
 
-    credit = @course.credit.split("/")[1].to_i
-    current_user.sum_credit += credit
-    current_user.degree_credit += credit
+  def deletefromsubmit #--------------------------------------------------------从待提交课表中删除对应课程
+  	@course=Course.find_by_id(params[:id])
+	  @@submit_courses.delete(@course)
+	 	
+		current_user.unsubmit_num -=1
+		current_user.save(:validate => false)
+
+  	flash={:success => "已将: #{@course.name}课程从待提交单中删除"}
+		redirect_to submit_courses_path, flash: flash
+	end
+
+  
+  def selectd #------------------------------------------------------------------------选择对应课程为学位课
+    @course=Course.find_by_id(params[:id])
+		@@submit_courses<<@course
 
     @course.is_degree = true
     @course.save(:validate => false)
-    
-    current_user.save(:validate => false)
 
-    flash={:suceess => "成功选择课程: #{@course.name}"}
-    redirect_to courses_path, flash: flash
+		current_user.unsubmit_num +=1
+		current_user.save(:validate => false)
+
+    flash={:suceess => "课程: #{@course.name}成功加入待提交选课"}
+    redirect_to list_courses_path, flash: flash
   end
 
+	def submit #-----------------------------------------------------------------------------提交页面显示内容
+		
+		if @@submit_courses.length ==0
+			current_user.unsubmit_num=0
+			current_user.save(:validate => false)
+		end
+
+		@course=@@submit_courses
+		@credit=0
+		@degree_credit=0
+		@course.each do |course|
+			credit_temp=course.credit.split("/")[1].to_i
+			@credit += credit_temp
+			if course.is_degree == true
+							@degree_credit += credit_temp
+			end
+		end
+		@course_day=[]
+		@course_start=[]
+		@course_end=[]
+		@i=0
+		@course.each do |course|
+			@course_day[@i]=course.course_time.split("(")[0]
+			@course_start[@i]=course.course_time.split("-")[0].split("(")[1]
+			@course_end[@i]=course.course_time.split("-")[1].split(")")[0]
+			@i=@i+1
+		end
+	end
+
+	def gotosubmit #----------------------------------------------------------------------------------提交操作
+		#------------------记录待提交列表中课程时间-------------------------
+		@course_day=[]
+		@course_start=[]
+		@course_end=[]
+		@i=0
+		@all_courses=[]
+		
+		@@submit_courses.each do |course|
+			@all_courses<<course
+		end
+
+		current_user.courses.each do |course|
+			@all_courses<<course
+		end
+
+		@all_courses.each do |course|
+			@course_day[@i]=course.course_time.split("(")[0]
+			@course_start[@i]=course.course_time.split("-")[0].split("(")[1].to_i
+			@course_end[@i]=course.course_time.split("-")[1].split(")")[0].to_i
+			@i=@i+1
+		end
+
+		#---------------判断待提交列表中是否存在时间冲突的课程--------------
+		@conflict=0
+		if @i > 1
+			for i in 0..@i-1
+				for j in i+1..@i-1
+					if ((@course_day[i]==@course_day[j])  and  (((@course_start[i]>=@course_start[j])and(@course_start[i]<@course_end[j])) or ((@course_end[i]>@course_start[j])and(@course_end[i]<=@course_end[j]))))
+						@conflict=1
+					end
+				end
+			end	
+		end
+								
+    if @conflict == 0
+			@@submit_courses.each do |course|
+				current_user.courses<<course
+				credit = course.credit.split("/")[1].to_i
+				current_user.sum_credit += credit
+				if course.is_degree == true
+					current_user.degree_credit += credit
+				end
+			end
+			@@submit_courses=[]
+			current_user.unsubmit_num=0
+			current_user.save(:validate => false)
+			flash={:suceess => "成功提交选课"}    
+	  	redirect_to courses_path, flash: flash
+		end
+
+		if @conflict == 1
+			flash={:success => "提交课程失败，存在时间冲突的课程"}
+			redirect_to submit_courses_path, flash: flash
+		end
+
+	end
 
   #-------------------------for both teachers and students----------------------
 

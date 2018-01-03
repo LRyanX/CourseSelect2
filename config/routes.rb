@@ -24,13 +24,16 @@ Rails.application.routes.draw do
       get :quit
       get :open
       get :close
-      get :advselect
- 
+			get :submit
+			get :gotosubmit
+			get :deletefromsubmit
     end
     collection do
       get :list
-      get :schedule
-    end
+			get :submit
+      get :advselect
+    	get :schedule
+		end
   end
 
   resources :grades, only: [:index, :update]
