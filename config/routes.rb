@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       get :quit
       get :open
       get :close
+      get :advselect
 			get :submit
 			get :gotosubmit
 			get :deletefromsubmit
@@ -31,7 +32,6 @@ Rails.application.routes.draw do
     collection do
       get :list
 			get :submit
-      get :advselect
     	get :schedule
 		end
   end
