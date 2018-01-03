@@ -28,7 +28,8 @@ Rails.application.routes.draw do
 			get :submit
 			get :gotosubmit
 			get :deletefromsubmit
-    end
+    	get :advselect
+		end
     collection do
       get :list
 			get :submit
