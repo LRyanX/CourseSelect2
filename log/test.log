@@ -1,0 +1,1026 @@
+  [1m[36m (192.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL) [0m
+  [1m[35m (53.3ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateUsers (20160818081955)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (125.5ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "name" character varying, "email" character varying, "num" character varying, "major" character varying, "department" character varying, "password_digest" character varying, "remember_digest" character varying, "admin" boolean DEFAULT 'f', "teacher" boolean DEFAULT 'f', "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35m (43.0ms)[0m  CREATE UNIQUE INDEX  "index_users_on_email" ON "users"  ("email")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20160818081955"]]
+  [1m[35m (9.9ms)[0m  COMMIT
+Migrating to CreateCourses (20160907152104)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (69.2ms)[0m  CREATE TABLE "courses" ("id" serial primary key, "name" character varying, "course_code" character varying, "course_type" character varying, "teaching_type" character varying, "exam_type" character varying, "credit" character varying, "limit_num" integer, "student_num" integer DEFAULT 0, "class_room" character varying, "course_time" character varying, "course_week" character varying, "teacher_id" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20160907152104"]]
+  [1m[35m (8.7ms)[0m  COMMIT
+Migrating to CreateGrades (20160909105514)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (34.0ms)[0m  CREATE TABLE "grades" ("id" serial primary key, "course_id" integer, "user_id" integer, "grade" integer, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) 
+  [1m[36m (32.1ms)[0m  [1mCREATE  INDEX  "index_grades_on_course_id" ON "grades"  ("course_id")[0m
+  [1m[35m (32.3ms)[0m  CREATE  INDEX  "index_grades_on_user_id" ON "grades"  ("user_id")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20160909105514"]]
+  [1m[35m (17.8ms)[0m  COMMIT
+Migrating to AddCourseAttribute (20161109084337)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (112.5ms)[0m  ALTER TABLE "courses" ADD "open" boolean DEFAULT 't'
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20161109084337"]]
+  [1m[35m (19.5ms)[0m  COMMIT
+Migrating to AddDegreeCreditToUsers (20171220062754)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (122.2ms)[0m  ALTER TABLE "users" ADD "degree_credit" integer DEFAULT 0
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20171220062754"]]
+  [1m[35m (12.9ms)[0m  COMMIT
+Migrating to AddSumCreditToUsers (20171220062832)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (108.5ms)[0m  ALTER TABLE "users" ADD "sum_credit" integer DEFAULT 0
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20171220062832"]]
+  [1m[35m (11.2ms)[0m  COMMIT
+Migrating to AddIsDegreeToCourses (20171220062918)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (87.2ms)[0m  ALTER TABLE "courses" ADD "is_degree" boolean DEFAULT 'f'
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20171220062918"]]
+  [1m[35m (9.8ms)[0m  COMMIT
+Migrating to AddStudentIdToCourses (20171223021654)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "courses" ADD "student_id" integer
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20171223021654"]]
+  [1m[35m (7.5ms)[0m  COMMIT
+Migrating to AddTeacherIdToUsers (20171223021731)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "users" ADD "teacher_id" integer
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20171223021731"]]
+  [1m[35m (8.0ms)[0m  COMMIT
+Migrating to AddColumnUnsubmitNumIntoUsers (20180102151154)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (123.3ms)[0m  ALTER TABLE "users" ADD "unsubmit_num" integer DEFAULT 0
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ($1)[0m  [["version", "20180102151154"]]
+  [1m[35m (18.8ms)[0m  COMMIT
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (1.9ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'courses'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+
+  [1m[36m (1.4ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'grades'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.8ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'users'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$mFTQJwaaPqVAV0alzkFQvOMk5Ub3LEhEvq8AWk9qEDAtr2KKZVPbC', '2018-01-06 07:15:46', '2018-01-06 07:15:46', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 07:15:46', '2018-01-06 07:15:46', 980190962)[0m
+  [1m[35m (22.0ms)[0m  COMMIT
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+-------------------------------------
+CoursesControllerTest: test_the_truth
+-------------------------------------
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$WzprvfnYH2fB32QcY4cYAem32NP5ShcuIpsrtOWYmSBdzRMw0WQDi', '2018-01-06 07:17:15', '2018-01-06 07:17:15', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 07:17:15', '2018-01-06 07:17:15', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 07:17:15', '2018-01-06 07:17:15', 298486374)
+  [1m[36m (8.1ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------
+CoursesControllerTest: test_the_truth
+-------------------------------------
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$TwsAiEcrMZvDQ72vsxDqzeuCqZKxyIiCjzkMF9UCpgBniUN1hm5di', '2018-01-06 07:18:24', '2018-01-06 07:18:24', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 07:18:24', '2018-01-06 07:18:24', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 07:18:24', '2018-01-06 07:18:24', 298486374)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 07:18:24', '2018-01-06 07:18:24', 113629430)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 07:18:24', '2018-01-06 07:18:24', 281110143)
+  [1m[36m (310.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------
+CoursesControllerTest: test_the_truth
+-------------------------------------
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (34.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (29.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (52.7ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$I99Ya3wDYozRD8qQ2JKd0uu7VoIP2nV72pcewiclLi4cBMQu3jr1a', '2018-01-06 08:22:52', '2018-01-06 08:22:52', 751813785)[0m
+  [1m[35mFixture Delete (32.1ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 08:22:52', '2018-01-06 08:22:52', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 08:22:52', '2018-01-06 08:22:52', 298486374)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 08:22:52', '2018-01-06 08:22:52', 113629430)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 08:22:52', '2018-01-06 08:22:52', 281110143)
+  [1m[36m (10.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_list_when_select
+------------------------------------------------------------
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------
+CoursesControllerTest: test_the_truth
+-------------------------------------
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.0ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$S7WKI3IgghyA8X6lTX0P3OFcHe8RYfrKPcHrIKnSV.WFCT7fI91He', '2018-01-06 08:24:06', '2018-01-06 08:24:06', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 08:24:06', '2018-01-06 08:24:06', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 08:24:06', '2018-01-06 08:24:06', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 08:24:06', '2018-01-06 08:24:06', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 08:24:06', '2018-01-06 08:24:06', 281110143)
+  [1m[36m (22.2ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------
+CoursesControllerTest: test_the_truth
+-------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_list_when_select
+------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$0.BzxfOPDqdKaBXhmJKTH.xNbOdUByf3wv9qHb60.gmh1TDsiunF.', '2018-01-06 08:25:23', '2018-01-06 08:25:23', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 08:25:23', '2018-01-06 08:25:23', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 08:25:23', '2018-01-06 08:25:23', 298486374)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 08:25:23', '2018-01-06 08:25:23', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 08:25:23', '2018-01-06 08:25:23', 281110143)
+  [1m[36m (10.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_list_when_select
+------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------
+CoursesControllerTest: test_the_truth
+-------------------------------------
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$SxPctNQYHmmvaW6Ku9rsh.NeVV/fJShDPaz7hW1vPVJ2Lpwgwt5Qu', '2018-01-06 08:49:06', '2018-01-06 08:49:06', 751813785)[0m
+  [1m[35mFixture Delete (0.4ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 08:49:06', '2018-01-06 08:49:06', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 08:49:06', '2018-01-06 08:49:06', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 08:49:06', '2018-01-06 08:49:06', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 08:49:06', '2018-01-06 08:49:06', 281110143)
+  [1m[36m (161.0ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_list_when_select
+------------------------------------------------------------
+  [1m[35mCourse Load (0.4ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.6ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-------------------------------------
+CoursesControllerTest: test_the_truth
+-------------------------------------
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.0ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$bIxkk6ZTCThr2xlVvuai/OmVoGbzsHTwAtndN9vCb4HUbnoNyf/d.', '2018-01-06 09:00:41', '2018-01-06 09:00:41', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:00:41', '2018-01-06 09:00:41', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:00:41', '2018-01-06 09:00:41', 298486374)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:00:41', '2018-01-06 09:00:41', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:00:41', '2018-01-06 09:00:41', 281110143)
+  [1m[36m (9.2ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------
+CoursesControllerTest: test_the_truth
+-------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$spxZdfW7ovsU8R9FpjPFNelGK.4dlddBb495bmC378AcfAS9MA4ce', '2018-01-06 09:02:43', '2018-01-06 09:02:43', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:02:43', '2018-01-06 09:02:43', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:02:43', '2018-01-06 09:02:43', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:02:43', '2018-01-06 09:02:43', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:02:43', '2018-01-06 09:02:43', 281110143)
+  [1m[36m (19.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------
+CoursesControllerTest: test_the_truth
+-------------------------------------
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$lACHKG9aAclf8cNplh2q0OYJkqZhl9cwEVyeqQMt.VE2Lh/4Rnfx6', '2018-01-06 09:03:06', '2018-01-06 09:03:06', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:03:06', '2018-01-06 09:03:06', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:03:06', '2018-01-06 09:03:06', 298486374)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:03:06', '2018-01-06 09:03:06', 113629430)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:03:06', '2018-01-06 09:03:06', 281110143)
+  [1m[36m (140.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------
+CoursesControllerTest: test_the_truth
+-------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$AXcyZpDd9wZSS.evKWxAyuq7aztsEhDIH8Ajt9mKNj.wZh1rFplWy', '2018-01-06 09:04:39', '2018-01-06 09:04:39', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:04:39', '2018-01-06 09:04:39', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:04:39', '2018-01-06 09:04:39', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:04:39', '2018-01-06 09:04:39', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:04:39', '2018-01-06 09:04:39', 281110143)
+  [1m[36m (113.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$lSjPpASf/Daad9cv9/OtKevbN8k1PnxykX/o7iDvOSnztS/F3rUCC', '2018-01-06 09:07:37', '2018-01-06 09:07:37', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:07:37', '2018-01-06 09:07:37', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:07:37', '2018-01-06 09:07:37', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:07:37', '2018-01-06 09:07:37', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:07:37', '2018-01-06 09:07:37', 281110143)
+  [1m[36m (25.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.4ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$h0prC70fxZ2NqnYLAQzC2eAxSZoFHgzqM82cUnfpgnj8MjSdYeOhW', '2018-01-06 09:08:01', '2018-01-06 09:08:01', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:08:01', '2018-01-06 09:08:01', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:08:01', '2018-01-06 09:08:01', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:08:01', '2018-01-06 09:08:01', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:08:01', '2018-01-06 09:08:01', 281110143)
+  [1m[36m (16.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.4ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$nPzybQNskSR2gdEoKCnEhuM45D41M5xnHfTiQsQEORCGO.4EhfY26', '2018-01-06 09:10:09', '2018-01-06 09:10:09', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:10:09', '2018-01-06 09:10:09', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:10:09', '2018-01-06 09:10:09', 298486374)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:10:09', '2018-01-06 09:10:09', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:10:09', '2018-01-06 09:10:09', 281110143)
+  [1m[36m (210.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$5czKgLGRfCApg1vUbpVQ1OyAt.djRUiVcQ9c2bKPJgRxkJ6vrvDuO', '2018-01-06 09:10:30', '2018-01-06 09:10:30', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:10:30', '2018-01-06 09:10:30', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:10:30', '2018-01-06 09:10:30', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:10:30', '2018-01-06 09:10:30', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:10:30', '2018-01-06 09:10:30', 281110143)
+  [1m[36m (14.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.4ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.5ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$gCOHIcJZOxNCBmxrgdZWWu7RO9qMQPQNxZU1SY/IKLksj0/GvVfeC', '2018-01-06 09:12:15', '2018-01-06 09:12:15', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:12:15', '2018-01-06 09:12:15', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:12:15', '2018-01-06 09:12:15', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:12:15', '2018-01-06 09:12:15', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:12:15', '2018-01-06 09:12:15', 281110143)
+  [1m[36m (16.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.5ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$MT7zuo/pyLz4tzgewazyWeIvxD9Qh.UM.t9KhmpCUbdl0FxDR3Rku', '2018-01-06 09:12:53', '2018-01-06 09:12:53', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:12:53', '2018-01-06 09:12:53', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:12:53', '2018-01-06 09:12:53', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:12:53', '2018-01-06 09:12:53', 113629430)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:12:53', '2018-01-06 09:12:53', 281110143)
+  [1m[36m (246.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.5ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$YK/V4P/0qebXFVOpkg1L8..xjPAXpwAx3Hfw4HBsjEgFqZn/bEFg.', '2018-01-06 09:14:11', '2018-01-06 09:14:11', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:14:11', '2018-01-06 09:14:11', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:14:11', '2018-01-06 09:14:11', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:14:11', '2018-01-06 09:14:11', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:14:11', '2018-01-06 09:14:11', 281110143)
+  [1m[36m (6.9ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.4ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$mkaAq9umwMVNMcpuiFR95Ow4ZMS34hR2rBfL9wDWhm956KAzMfBTi', '2018-01-06 09:15:19', '2018-01-06 09:15:19', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:15:19', '2018-01-06 09:15:19', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:15:19', '2018-01-06 09:15:19', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:15:19', '2018-01-06 09:15:19', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:15:19', '2018-01-06 09:15:19', 281110143)
+  [1m[36m (26.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.4ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$BZVwesClb93DOWd8YbzoMO4DLz/tHob/Rkho/pliWiMRAyx4F26Ge', '2018-01-06 09:16:49', '2018-01-06 09:16:49', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:16:49', '2018-01-06 09:16:49', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:16:49', '2018-01-06 09:16:49', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:16:49', '2018-01-06 09:16:49', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:16:49', '2018-01-06 09:16:49', 281110143)
+  [1m[36m (20.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.4ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$UeUnTmJi8JN767LUN7XJwOs8fxu8BNmRSZJtOOESA6emBQNzfbVNe', '2018-01-06 09:35:45', '2018-01-06 09:35:45', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:35:45', '2018-01-06 09:35:45', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:35:45', '2018-01-06 09:35:45', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:35:45', '2018-01-06 09:35:45', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:35:45', '2018-01-06 09:35:45', 281110143)
+  [1m[36m (26.9ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$Jb57LjYu4bHbPHcUvhlnp.AAIDLTbY3X9MLgKSK6yp.6jyIJaeH3u', '2018-01-06 09:36:33', '2018-01-06 09:36:33', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:36:33', '2018-01-06 09:36:33', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:36:33', '2018-01-06 09:36:33', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:36:33', '2018-01-06 09:36:33', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:36:33', '2018-01-06 09:36:33', 281110143)
+  [1m[36m (29.9ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.4ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$Eq.np/sG2o79LjD6yWGcg.R8nAXDC0uPTBDucH7f1s0QkT6l95HbS', '2018-01-06 09:39:09', '2018-01-06 09:39:09', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:39:09', '2018-01-06 09:39:09', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:39:09', '2018-01-06 09:39:09', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:39:09', '2018-01-06 09:39:09', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:39:09', '2018-01-06 09:39:09', 281110143)
+  [1m[36m (87.0ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.4ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$GNKhqQ6bAgEY3sK.1b8tQu6w0MWoGe32GAKy/BKLMbUAJOpcgIdrC', '2018-01-06 09:39:56', '2018-01-06 09:39:56', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:39:56', '2018-01-06 09:39:56', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:39:56', '2018-01-06 09:39:56', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:39:56', '2018-01-06 09:39:56', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:39:56', '2018-01-06 09:39:56', 281110143)
+  [1m[36m (16.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.5ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$FW191.9ECre7eAYv9CNMEeoI2MsaVHkopQzb9OSLJaOWtC12jCKK.', '2018-01-06 09:44:14', '2018-01-06 09:44:14', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:44:14', '2018-01-06 09:44:14', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:44:14', '2018-01-06 09:44:14', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:44:14', '2018-01-06 09:44:14', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:44:14', '2018-01-06 09:44:14', 281110143)
+  [1m[36m (24.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$rf6TEHW0SwL3.BDtw0fIw.tERRocQ/vUeeNsLPfngZtwJNTzilFqW', '2018-01-06 09:44:39', '2018-01-06 09:44:39', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:44:39', '2018-01-06 09:44:39', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:44:39', '2018-01-06 09:44:39', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:44:39', '2018-01-06 09:44:39', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:44:39', '2018-01-06 09:44:39', 281110143)
+  [1m[36m (26.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.4ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.4ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$aCN3EjP1loawAI6hndPy8.LcgW8RQjjIM3qbrqyIC8INy7vHBGt3C', '2018-01-06 09:44:57', '2018-01-06 09:44:57', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:44:57', '2018-01-06 09:44:57', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:44:57', '2018-01-06 09:44:57', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:44:57', '2018-01-06 09:44:57', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:44:57', '2018-01-06 09:44:57', 281110143)
+  [1m[36m (16.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$1gEC8Z3CviP5KnHI68wcquVeFA/FiPu.r5sBR65AXbxHD4zJ9YK3G', '2018-01-06 09:45:47', '2018-01-06 09:45:47', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:45:47', '2018-01-06 09:45:47', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:45:47', '2018-01-06 09:45:47', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:45:47', '2018-01-06 09:45:47', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:45:47', '2018-01-06 09:45:47', 281110143)
+  [1m[36m (18.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.4ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$e2uHoUaxg46aK/IJZjCU6.wYGDwzJPNifhcIeNDA6PNgdtA6kE56a', '2018-01-06 09:46:44', '2018-01-06 09:46:44', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:46:44', '2018-01-06 09:46:44', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:46:44', '2018-01-06 09:46:44', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:46:44', '2018-01-06 09:46:44', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:46:44', '2018-01-06 09:46:44', 281110143)
+  [1m[36m (20.0ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$njtmZx8HJv7O1ru4R.x6d.LPw03Ov5b0lhsXytEAWNmKKwxzS2tSi', '2018-01-06 09:48:37', '2018-01-06 09:48:37', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:48:37', '2018-01-06 09:48:37', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:48:37', '2018-01-06 09:48:37', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:48:37', '2018-01-06 09:48:37', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:48:37', '2018-01-06 09:48:37', 281110143)
+  [1m[36m (53.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.6ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$gZ8LtzA66F6Ba8E6sV/hLO1V/yOAdsVV3IYzvyruPuwIXna4ZTOvG', '2018-01-06 09:50:46', '2018-01-06 09:50:46', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:50:46', '2018-01-06 09:50:46', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:50:46', '2018-01-06 09:50:46', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:50:46', '2018-01-06 09:50:46', 113629430)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:50:46', '2018-01-06 09:50:46', 281110143)
+  [1m[36m (169.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$LSID.FW1RRzFnLlSlm1YOej7mkJkBbIkDvVVQ0TN0ZOTEK8AE3j0W', '2018-01-06 09:51:16', '2018-01-06 09:51:16', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:51:16', '2018-01-06 09:51:16', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:51:16', '2018-01-06 09:51:16', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:51:16', '2018-01-06 09:51:16', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:51:16', '2018-01-06 09:51:16', 281110143)
+  [1m[36m (19.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$C9U78bEeQkfYKL63aG3Hsur1wqdT5/yNoDP.rpYOvV3lmpPvYOpDS', '2018-01-06 09:54:02', '2018-01-06 09:54:02', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:54:02', '2018-01-06 09:54:02', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:54:02', '2018-01-06 09:54:02', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:54:02', '2018-01-06 09:54:02', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:54:02', '2018-01-06 09:54:02', 281110143)
+  [1m[36m (44.1ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$I7hnbqJBFXJm4LUN50rhrOnJgsJ64txyhzGXbwoGcrkJAHdEQn83e', '2018-01-06 09:55:11', '2018-01-06 09:55:11', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:55:11', '2018-01-06 09:55:11', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:55:11', '2018-01-06 09:55:11', 298486374)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:55:11', '2018-01-06 09:55:11', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:55:11', '2018-01-06 09:55:11', 281110143)
+  [1m[36m (28.1ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.5ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$xx2.KVJVB2Py6ywrjUNv5.Q/k01VXKV/7UGCefE1LkITh92qUdbCi', '2018-01-06 09:55:51', '2018-01-06 09:55:51', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:55:51', '2018-01-06 09:55:51', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:55:51', '2018-01-06 09:55:51', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:55:51', '2018-01-06 09:55:51', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:55:51', '2018-01-06 09:55:51', 281110143)
+  [1m[36m (17.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.7ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$Wml2GCui0bKxFcXL17sKaebpG24vx/.IwyHvIETya1np1PNRJnEqi', '2018-01-06 09:56:04', '2018-01-06 09:56:04', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:56:04', '2018-01-06 09:56:04', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:56:04', '2018-01-06 09:56:04', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:56:04', '2018-01-06 09:56:04', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:56:04', '2018-01-06 09:56:04', 281110143)
+  [1m[36m (10.0ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$BxIVXBguFCoRspdRa5uZlum..vjMfbIH0ETUoMfKUkkfpn4Prfry2', '2018-01-06 09:56:22', '2018-01-06 09:56:22', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:56:22', '2018-01-06 09:56:22', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:56:22', '2018-01-06 09:56:22', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:56:22', '2018-01-06 09:56:22', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:56:22', '2018-01-06 09:56:22', 281110143)
+  [1m[36m (24.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.5ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$/LO86of37SVcnvh4y.TXhOhHhOAdk4oDx63d/kIU978.VJR8GJRPa', '2018-01-06 09:56:50', '2018-01-06 09:56:50', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:56:50', '2018-01-06 09:56:50', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:56:50', '2018-01-06 09:56:50', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:56:50', '2018-01-06 09:56:50', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:56:50', '2018-01-06 09:56:50', 281110143)
+  [1m[36m (19.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$tkxDyv1jm85/YIBtBnNTSu15MVbUxtYYTDaD07RoMGKVigEn1SWUi', '2018-01-06 09:57:28', '2018-01-06 09:57:28', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:57:28', '2018-01-06 09:57:28', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:57:28', '2018-01-06 09:57:28', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:57:28', '2018-01-06 09:57:28', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:57:28', '2018-01-06 09:57:28', 281110143)
+  [1m[36m (11.1ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$m1snXOQDQn6f6czdWpAe/ev2RCZOzzDyr4q/dHtxPXb7eqJVe/OEC', '2018-01-06 09:59:19', '2018-01-06 09:59:19', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:59:19', '2018-01-06 09:59:19', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:59:19', '2018-01-06 09:59:19', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-06 09:59:19', '2018-01-06 09:59:19', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-06 09:59:19', '2018-01-06 09:59:19', 281110143)
+  [1m[36m (24.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
