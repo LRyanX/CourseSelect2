@@ -3,7 +3,8 @@ class CoursesController < ApplicationController
   before_action :student_logged_in, only: [:select, :quit, :selectd, :schedule]
   before_action :teacher_logged_in, only: [:new, :create, :edit, :destroy, :update, :open, :close, :advselect]#add open by qiao
   before_action :logged_in, only: :index
-  before_action :credit 
+  before_action :credit
+  before_action :degree 
   #-------------------------for teachers----------------------
 
   def new
@@ -60,14 +61,14 @@ class CoursesController < ApplicationController
     @course=Course.find_by_id(params[:id])
     if current_user.students.length == 0
        flash={:warning => "您尚未拥有学生，无法进行推荐！"}
-       redirect_to courses_path, flash: flash
+       redirect_to list_courses_path, flash: flash
     else
       current_user.students.each do |student|
         student.student_courses<<@course
       end
 
       flash={:suceess => "成功选择课程: #{@course.name}"}
-      redirect_to courses_path, flash: flash
+      redirect_to list_courses_path, flash: flash
     end
   end
 
@@ -334,11 +335,17 @@ class CoursesController < ApplicationController
     credit = @course.credit.split("/")[1].to_i
     current_user.sum_credit -= credit
 
-    if @course.is_degree
-
-       @course.is_degree = false
-       @course.save(:validate => false)
-       current_user.degree_credit -= credit
+    grade = current_user.grades
+    grade.each do |g|
+        if g.course_id == @course.id
+           if g.is_degree == true
+              g.is_degree = false
+              g.save(:validate => false)
+              current_user.degree_credit -= credit
+              current_user.save(:validate => false)
+           end
+           break
+        end
     end
     
     current_user.save(:validate => false)
@@ -437,14 +444,28 @@ class CoursesController < ApplicationController
 			end	
 		end
 								
-    if @conflict == 0
+    		      if @conflict == 0
 			@@submit_courses.each do |course|
+                        	
 				current_user.courses<<course
+
+				@grade = current_user.grades
+
 				credit = course.credit.split("/")[1].to_i
 				current_user.sum_credit += credit
+
 				if course.is_degree == true
 					current_user.degree_credit += credit
+					@grade.each do |g|
+					    if g.course.id == course.id
+					       g.is_degree =true
+					       g.save(:validate => false)
+					    end
+					end
+
 				end
+                                course.is_degree=false
+                                course.save(:validate => false)
 			end
 			
 			@@submit_courses=[]
@@ -521,5 +542,18 @@ class CoursesController < ApplicationController
     end
     current_user.sum_credit = sum_credit
     current_user.save(:validate => false)
+  end
+
+  def degree
+     sum_degree = 0
+     grade = current_user.grades
+     grade.each do |g|
+           if g.is_degree == true
+              course = Course.find_by_id(g.course_id)
+              sum_degree += course.credit.split("/")[1].to_i
+           end
+     end
+              current_user.degree_credit = sum_degree
+              current_user.save(:validate => false)
   end
 end

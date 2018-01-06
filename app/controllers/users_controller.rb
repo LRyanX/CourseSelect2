@@ -45,8 +45,7 @@ class UsersController < ApplicationController
      if current_user.students.length > 0
         @advcourse=current_user.students[0].student_courses
      else
-        redirect_to courses_path, flash: {:warning => "您当前没有学生，无法进行推荐课程功能！"}
-       
+        redirect_to courses_path, flash: {:warning => "您当前没有学生，无法进行推荐课程功能！"}     
      end
   end
 

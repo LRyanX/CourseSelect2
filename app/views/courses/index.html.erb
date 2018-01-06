@@ -32,6 +32,7 @@
             </tr>
 
             <tbody>
+	    <% grade = current_user.grades %>
             <% @course.each do |course| %>
                 <tr>
 
@@ -39,10 +40,16 @@
                   <td><%= course.name %></td>
                   <td><%= course.credit %></td>
                   <td><%= course.course_time %></td>
-                  <% if course.is_degree %>
-                        <td>是</td>
-                  <% else %>
-                        <td>否</td>
+
+		  <% grade.each do |g| %>
+		      <% if g.course_id == course.id %> 
+		          <% if	g.is_degree == true %>
+				<td>是</td>
+			  <% else %>		       
+				<td>否</td>
+  	                  <% end %>
+                          <% break %>
+		      <% end %>
                   <% end %>
 
                   <td><%= course.exam_type %></td>
