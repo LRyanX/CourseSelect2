@@ -4,8 +4,46 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+
+one:
+ name: "计算机体系结构"
+ course_type: "专业核心课"
+ credit: "60/3.0"
+ course_week: "第2-20周"
+ course_time: "周一(9-11)"
+ class_room: "教1-107"
+ teaching_type: "课堂讲授为主"
+ exam_type: "闭卷笔试"
+
+two:
+ course_code: 091M4002H
+ name: 计算机网络
+ course_type: 专业核心课
+ credit: 60/3.0
+ course_week: 第2-20周五
+ course_time: 周五(2-4)
+ class_room: 教1-107
+ teaching_type: 课堂讲授为主
+ exam_type: 闭卷笔试
+
+three:
+ course_code: 091M4043H
+ name: 高级人工智能
+ course_type: 专业核心课
+ credit: 60/3.0
+ course_week: 第2-20周二
+ course_time: 周二(9-11)
+ class_room: 教1-107
+ teaching_type: 课堂讲授为主
+ exam_type: 闭卷笔试	
+
+four:
+ course_code: 091M5001H
+ name: VLSI测试与可测试性设计 
+ course_type: 专业普及课
+ credit: 40/2.0 
+ course_week: 第2-16周二
+ course_time: 周二(9-11) 
+ class_room: 教1-109
+ teaching_type: 课堂讲授为主
+ exam_type: 课堂开卷

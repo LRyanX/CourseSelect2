@@ -13,10 +13,26 @@ class CoursesController < ApplicationController
 
   def create
     @course = Course.new(course_params)
-    if @course.save
+    
+		if @course.save
+     mail_body=current_user.name+"老师,您好！您已成功申请："+@course.name+"课程，可以开放选课了！"
+			require 'mail'
+		  smtp = { :address => 'smtp.163.com', :port => 25, :domain => '163.com', \
+						   :user_name => 'ucas_courseselect@163.com', :password => 'password123',\
+						   :enable_starttls_auto => true, :openssl_verify_mode => 'none' }
+			Mail.defaults { delivery_method :smtp, smtp }
+			mail = Mail.new do
+		  from 'ucas_courseselect@163.com'
+			to 'ucas_student_1@163.com'
+			subject '新课程申请通知'
+			body mail_body
+	    end
+			mail.deliver!
+    	
       current_user.teaching_courses<<@course
       redirect_to courses_path, flash: {success: "新课程申请成功"}
-    else
+
+		else
       flash[:warning] = "信息填写有误,请重试"
       render 'new'
     end
@@ -52,6 +68,21 @@ class CoursesController < ApplicationController
     @course=Course.find_by_id(params[:id])
     current_user.teaching_courses.delete(@course)
     @course.destroy
+    
+		mail_body=current_user.name+"老师,您好！您已删除："+@course.name+"课程！"
+   require 'mail'
+	  smtp = { :address => 'smtp.163.com', :port => 25, :domain => '163.com', \
+	           :user_name => 'ucas_courseselect@163.com', :password => 'password123',\
+		         :enable_starttls_auto => true, :openssl_verify_mode => 'none' }
+		Mail.defaults { delivery_method :smtp, smtp }
+	  mail = Mail.new do
+		from 'ucas_courseselect@163.com'
+		to 'ucas_student_1@163.com'
+		subject '课程删除通知'
+	  body mail_body
+		end
+	  mail.deliver!
+
     flash={:success => "成功删除课程: #{@course.name}"}
     redirect_to courses_path, flash: flash
   end
@@ -87,7 +118,7 @@ class CoursesController < ApplicationController
     if teacher_logged_in?
        if current_user.students.length > 0
           @course=@course-current_user.students[0].student_courses
-       end
+      end
 		end
     tmp=[]
     @course.each do |course|
@@ -95,7 +126,7 @@ class CoursesController < ApplicationController
         tmp<<course
       end
     end
-    @course=tmp
+	  @course=tmp
   end
 
   def schedule
@@ -347,9 +378,22 @@ class CoursesController < ApplicationController
            break
         end
     end
-    
-    current_user.save(:validate => false)
 
+		mail_body=current_user.name+"同学,您好！您已成功退选"+@course.name+"课程，可以在课程网站中查询您的最新课表！"
+		require 'mail'
+		smtp = { :address => 'smtp.163.com', :port => 25, :domain => '163.com', \
+	           :user_name => 'ucas_courseselect@163.com', :password => 'password123',\
+	           :enable_starttls_auto => true, :openssl_verify_mode => 'none' } 
+						  Mail.defaults { delivery_method :smtp, smtp }
+		mail = Mail.new do
+		from 'ucas_courseselect@163.com'
+		to 'ucas_student_1@163.com'
+		subject '退课通知'
+		body mail_body
+		end
+   mail.deliver!
+
+    current_user.save(:validate => false)
     flash={:success => "成功退选课程: #{@course.name}"}
     redirect_to courses_path, flash: flash
   end
@@ -415,10 +459,12 @@ class CoursesController < ApplicationController
 		@course_start=[]
 		@course_end=[]
 		@i=0
+		@submit_num=0
 		@all_courses=[]
 		
 		@@submit_courses.each do |course|
 			@all_courses<<course
+			@submit_num+=1
 		end
 
 		current_user.courses.each do |course|
@@ -437,14 +483,21 @@ class CoursesController < ApplicationController
 		if @i > 1
 			for i in 0..@i-1
 				for j in i+1..@i-1
-					if ((@course_day[i]==@course_day[j])  and  (((@course_start[i]>@course_start[j])and(@course_start[i]<@course_end[j])) or ((@course_end[i]>@course_start[j])and(@course_end[i]<@course_end[j]))))
+					if ((@course_day[i]==@course_day[j])  and  (((@course_start[i]>=@course_start[j])and(@course_start[i]<=@course_end[j])) or ((@course_end[i]>=@course_start[j])and(@course_end[i]<=@course_end[j]))))
 						@conflict=1
 					end
 				end
 			end	
 		end
 								
-    		      if @conflict == 0
+    		if @conflict == 0
+		
+		if @submit_num == 0
+			 flash={:success => "提交课程失败,请选择课程后再进行提交"}
+			 redirect_to submit_courses_path, flash: flash
+		end							
+    
+		if @conflict == 0 and @submit_num > 0
 			@@submit_courses.each do |course|
                         	
 				current_user.courses<<course
@@ -466,12 +519,14 @@ class CoursesController < ApplicationController
 				end
                                 course.is_degree=false
                                 course.save(:validate => false)
+				end				
 			end
 			
 			@@submit_courses=[]
 			current_user.unsubmit_num=0
 			current_user.save(:validate => false)
 #-------------------发送邮件部分-----------------------------------------------------
+			mail_body=current_user.name+"同学,您好！您已成功提交选课，可以在课程网站中查询您的最新课表！"
 			require 'mail'
 			smtp = { :address => 'smtp.163.com', :port => 25, :domain => '163.com', \
 			 				 :user_name => 'ucas_courseselect@163.com', :password => 'password123',\
@@ -481,7 +536,8 @@ class CoursesController < ApplicationController
 	  	from 'ucas_courseselect@163.com'
 		  to 'ucas_student_1@163.com'
 			subject '选课通知'
-			body '您已成功提交选课，可以在课程网站中查询您的最新课表！'
+			#body '您已成功提交选课，可以在课程网站中查询您的最新课表！'
+			body mail_body
 			#add_file File.expand_path("./mail2.rb")
 			end
 			mail.deliver!
