@@ -489,8 +489,6 @@ class CoursesController < ApplicationController
 				end
 			end	
 		end
-								
-    		if @conflict == 0
 		
 		if @submit_num == 0
 			 flash={:success => "提交课程失败,请选择课程后再进行提交"}
@@ -514,14 +512,12 @@ class CoursesController < ApplicationController
 					       g.is_degree =true
 					       g.save(:validate => false)
 					    end
-					end
-
+							end
 				end
-                                course.is_degree=false
-                                course.save(:validate => false)
-				end				
-			end
-			
+        course.is_degree=false
+        course.save(:validate => false)
+			end				
+		#end
 			@@submit_courses=[]
 			current_user.unsubmit_num=0
 			current_user.save(:validate => false)
@@ -551,7 +547,6 @@ class CoursesController < ApplicationController
 			flash={:success => "提交课程失败，存在时间冲突的课程"}
 			redirect_to submit_courses_path, flash: flash
 		end
-
 	end
 
   #-------------------------for both teachers and students----------------------

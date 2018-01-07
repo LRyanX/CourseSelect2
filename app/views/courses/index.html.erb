@@ -17,7 +17,7 @@
 	<div class="panel-body" style="min-height: 450px">          
         <% if student_logged_in? %>
             <tr><th>总共选修课程： <%= current_user.sum_credit %> 学分，其中学位课： <%= current_user.degree_credit %> 学分 </tr></th>
-            <% end %>
+        <% end %>
         <div class="panel-body">
           <table class="table table-responsive table-condensed table-hover">
             <thead>
@@ -26,9 +26,14 @@
               <th>课程名称</th>
               <th>课时/学分</th>
 	      <th>上课时间</th>
+              <% if student_logged_in? %>
               <th>学位课</th>
+              <% end %>
               <th>考试方式</th>
+              <% if student_logged_in? %>
               <th>主讲教师</th>
+              <% end %>
+
             </tr>
 
             <tbody>
@@ -40,7 +45,7 @@
                   <td><%= course.name %></td>
                   <td><%= course.credit %></td>
                   <td><%= course.course_time %></td>
-
+                  <% if student_logged_in? %>
 		  <% grade.each do |g| %>
 		      <% if g.course_id == course.id %> 
 		          <% if	g.is_degree == true %>
@@ -51,17 +56,21 @@
                           <% break %>
 		      <% end %>
                   <% end %>
+                  <% end %>
 
                   <td><%= course.exam_type %></td>
+                  
+                  <% if student_logged_in? %>                
                   <td><%= course.teacher.name %></td>
+		  <% end %>
 
                   <% if teacher_logged_in? %>
-                      <td><%= link_to "编辑", edit_course_url(course), class: 'btn btn-xs btn-info' %></td>
                       <% if course.open? %>
-                          <td><%= link_to "关闭", close_course_url(course), class: 'btn btn-xs btn-info' %></td>
+                          <td><%= link_to "关闭课程", close_course_url(course), class: 'btn btn-xs btn-info' %></td>
                       <% else %>
-                          <td><%= link_to "开通", open_course_url(course), class: 'btn btn-xs btn-info' %></td>
+                          <td><%= link_to "开通课程", open_course_url(course), class: 'btn btn-xs btn-info' %></td>
                       <% end %>
+                      <td><%= link_to "编辑", edit_course_url(course), class: 'btn btn-xs btn-info' %></td>
                       <td><%= link_to "删除", course_path(course), :method => "delete", class: 'btn btn-xs btn-danger', :data => {confirm: '确定要删除此课程?'} %></td>
                   <% elsif student_logged_in? %>
                       <td><%= link_to "删除", quit_course_path(course), class: 'btn-sm btn-danger' %></td>
