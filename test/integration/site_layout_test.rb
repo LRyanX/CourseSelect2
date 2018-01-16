@@ -9,7 +9,8 @@ class SiteLayoutTest < ActionDispatch::IntegrationTest
     get root_path
     assert_template 'homes/index'
     assert_select "a[href=?]", root_path, count: 2
-    assert_select "a[href=?]", "http://guides.ruby-china.org/"
-    assert_select "a[href=?]", "http://www.runoob.com/js/js-tutorial.html"
+    assert_select "a[href=?]", "http://www.ucas.ac.cn/"
+    assert_select "a[href=?]", "http://lib.ucas.ac.cn/"
+		assert_select "a[href=?]", "http://sep.ucas.ac.cn/"
   end
 end

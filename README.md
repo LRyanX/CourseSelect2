@@ -1,22 +1,8 @@
-# CourseSelect [![Build Status](https://travis-ci.org/PENGZhaoqing/CourseSelect.svg?branch=master)](https://travis-ci.org/PENGZhaoqing/CourseSelect)
+# CourseSelect 
 
-### [中文教程1](http://blog.csdn.net/ppp8300885/article/details/52594839) [中文教程2](http://blog.csdn.net/ppp8300885/article/details/52601560) [中文教程3](http://blog.csdn.net/ppp8300885/article/details/52669749)
+  此github项目为国科大研究生课程（高级软件工程）的课程作业，由李嘉禛和刘旭在原有选课系统样本的基础上进行更新改进完成，增添了部分功能，在完成改进的过程中，小组成员对Ruby on Rail这一web应用开发框架有了更好的认识。
 
-
-这个样本系统是基于国科大研究生课程 (高级软件工程) 开发的项目,目的是帮助入门者学习RoR (Ruby on Rails) 
-
-适合新学者的入手的第一个项目 ([演示Demo戳这里](https://courseselect.herokuapp.com/ ))，入门者可以在这个样本系统上增加更多的功能:
-
-* 处理选课冲突、控制选课人数
-* 统计选课学分，学位课等
-* 增加选课的开放、关闭功能
-* 自定义管理员后台
-* 基于OAuth的授权登陆
-* Excel格式的数据导入
-* 绑定用户邮箱（实现注册激活，忘记密码等）
-* 站内查找检索 （课程按分类查找，过滤等）
-
-### 目前功能：
+## 原有功能功能：
 
 * 多角色登陆（学生，老师，管理员）
 * 学生动态选课，退课
@@ -24,211 +10,57 @@
 * 老师对课程下的学生添加、修改成绩
 * 权限控制：老师和学生只能看到自己相关课程信息
 
-### 截图
+## 新增功能：
 
-<img src="/lib/screenshot1.png" width="700">  
+* 选课单功能
+* 选课时间冲突检测功能
+* 邮件通知功能
 
-<img src="/lib/screenshot2.png" width="700">
+ 
+## 新增功能说明：
 
-<img src="/lib/screenshot3.png" width="700">   
+* 选课单功能
 
-<img src="/lib/screenshot4.png" width="700">
+>在原有的系统中，学生点击课程选择便会将课程加入到自己的已选课程中，同时需要对数据库Grades进行更新，在访客量很大时可能会造成系统压力过大。添加了选课单功能后，学生将想要选择的课程先加入选课单，在调整好所有的课程后，可以一次性提交。这样既方便学生规划自己一个学期的选课又能缓解系统压力。通过建立submit_courses这一临时表存储用户准备选择的课程，在用户确认好所有想要选择的课程后可以一次性提交，完成加入课程到已选课程。<br>
 
-## 说明
+>>功能截图如下:<br>
 
-目前使用的库和数据库：
+>> <img src="/lib/选课单.png" width="700"> 
 
-* 使用[Bootstrap](http://getbootstrap.com/)作为前端库
-* 使用[Rails_admin Gem](https://github.com/sferik/rails_admin)作为后台管理
-* 使用[Postgresql](http://postgresapp.com/)作为数据库
+* 选课时间冲突检测功能
 
-使用前需要安装Bundler，Gem，Ruby，Rails等依赖环境。
+>在原有的系统中，如果先后选择存在时间冲突的课程是被允许的，这显然不符合实际要求。所以，我们增添了时间冲突检测的功能，在提交选课单给系统的时候，会将选课内的课程以及已经选择的课程进行比较，看是否存在时间上的冲突，如果不存在则能够成功提交选课单，否则系统将会提示存在选课冲突，提醒学生进行检查。<br>
 
-请根据本地系统下载安装[postgresql](https://devcenter.heroku.com/articles/heroku-postgresql#local-setup)数据库，并运行`psql -h localhost`检查安装情况。
+>判断规则：**当上课周数存在重叠、每周上课的天次相同、一天内上课的具体时间存在重叠的情况，会提示选课时间冲突，否则不进行提示；**<br>
 
+>将当前用户已经选择的课程和选课单中准备提交的课程都存储到一个课程数组中，采用两次循环嵌套的方法，依次将每一门课程与其他未比较过的课程进行上述判断规则的比较，若存在冲突则在用户提交课程的时候会给出提示，否则选课单中的课程可以进行提交。
 
-## 安装
+>>功能截图如下:<br>
 
-在终端（MacOS或Linux）中执行以下代码
+>>可以看到在图一中，由于选课单中存在时间冲突的课程所以提交失败，而在选课单二中课程符合时间要求则可以成功提交，提交后页面跳转到已选课程页面中。
 
-```
-$ git clone https://github.com/PENGZhaoqing/CourseSelect
-$ cd CourseSelect
-$ bundle install
-$ rake db:migrate
-$ rake db:seed
-$ rails s 
-```
+>> <img src="/lib/冲突检测1.png" width="700"> 
 
-在浏览器中输入`localhost:3000`访问主页
+>> <img src="/lib/冲突检测2.png" width="700"> 
 
-## 使用
+* 邮件通知功能
 
-1.学生登陆：
+>为了使用户在对课程进行操作后得到通知，以便用户确认自己的操作已经生效，我们增添了邮件通知功能。在老师创建新课程、删除不再开课的课程时成功的操作将会往老师注册时提供的邮箱中发送提醒邮件；在学生提交选课单、退选课程的时，成功的操作将会往学生邮箱中发送邮件；以此来让用户确认自己的操作已经生效。<br>
 
-账号：`student1@test.com`
+>产生邮件通知的情景有：
+>>**当老师成功申请课程；**<br>
+>>**当老师删除一门课程；**<br>
+>>**当学生成功提交选课单；**<br>
+>>**当学生成功退课；**<br>
 
-密码：`password`
+>**注：由于目前没有实现每个学生的绑定邮箱的自动注册功能，所以通知邮件统一发送至ucas_student_1@163.com邮箱，若想要验证此功能正确性，可以对此邮箱进行登录，密码为:2017e8018661131,请勿擅自修改密码，谢谢合作！**
 
-2.老师登陆：
+>>功能截图如下:<br>
 
-账号：`teacher1@test.com`
+>>可以看到在老师申请课程成功、学生成功退课的时候都会在邮箱有收到通知邮件以确保操作成功。
 
-密码：`password`
+>> <img src="/lib/邮件通知1.png" width="700"> 
 
-
-3.管理员登陆：
-
-账号：`admin@test.com`
-
-密码：`password`
-
-账号中数字都可以替换成2,3...等等
-
-
-## Heroku云部署
-
-项目可直接在Heroku上免费部署
-
-1.fork此项目到自己Github账号下
-
-2.创建Heroku账号以及Heroku app
-
-3.将Heroku app与自己Github下的fork的项目进行连接
-
-4.下载配置[Heroku CLI](https://devcenter.heroku.com/articles/heroku-command-line)命令行工具
-
-5.运行`heroku login`在终端登陆，检查与heroku app的远程连接情况`git config --list | grep heroku`，若未检查到相应的app，请看[这里](http://stackoverflow.com/questions/5129598/how-to-link-a-folder-with-an-existing-heroku-app)
-
-6.运行部署，详情[请戳这里](https://devcenter.heroku.com/articles/getting-started-with-rails4#rails-asset-pipeline)
-
-
-## 本地测试
-
-本项目包含了部分的测试（integration/fixture/model test），测试文件位于/test目录下。一键运行所有测试使用`rake test`：
-
-```
-PENG-MacBook-Pro:IMS_sample PENG-mac$ rake test
-Run options: --seed 15794
-
-# Running:
-.........
-
-Finished in 1.202169s, 7.4865 runs/s, 16.6366 assertions/s.
-
-9 runs, 20 assertions, 0 failures, 0 errors, 0 skips
-```
-
-### 模型测试
-
-以用户模型为例, 位于`test/models/user_test.rb`, 首先生成一个`@user`对象，然后`assert`用户是否有效，这里的调用`valid`方法会去检查你的模型中的相关的`validates`语句是否正确，若`@user.valid?`为false, 那么此`assert`会报错，代表`"should be valid"`这条测试没有通过, 单独运行此测试文件使用`rake test test/models/user_test.rb`
-
-
-```
-class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
-
-  def setup
-    @user = User.new(name: "Example User", email: "user@example.com", password: "password", password_confirmation: "password")
-  end
-
-  test "should be valid" do
-    assert  @user.valid?
-  end
-
-  ...
-
-end
-```
-
-### 视图和控制器测试
-
-以用户登录为例，位于`test/integration/user_login_test.rb`，首先同样生成一个@user模型，这个@user的用户名和密码可以在`test/fixtures/users.yml`中指定, 然后我们用get方法到达登录页面（sessions_login_path），然后使用post方法提交这个@user的账号密码来登录，如果登录成功，当前应该会跳转至homes控制器下的index方法进行处理，`assert_redirected_to`能判断这个跳转过程是否发生，然后调用`follow_redirect！`来紧跟当前的跳转，用`assert_template`来判读跳转后的视图文件是否为`homes/index`, 最后在这个视图文件下做一些测试，比如判断这个视图下连接为root_path的个数等等（根据当前登录的角色不同，当前的页面链接会不同，比如admin用户就会有控制面板的链接rails_admin_path，而普通用户没有，因此可以根据链接的个数来判断当前登录用户的角色）
-
-```
-class UserLoginTest < ActionDispatch::IntegrationTest
-
-  def setup
-    @user = users(:peng)
-  end
-
-  test "login with valid information" do
-    get sessions_login_path
-    post sessions_login_path(params: {session: {email: @user.email, password: 'password'}})
-    assert_redirected_to controller: :homes, action: :index
-    follow_redirect!
-    assert_template 'homes/index'
-    assert_select "a[href=?]", root_path, count: 2
-    assert_select "a[href=?]", rails_admin_path, count: 0
-  end
-end
-```
-
-### 测试涵盖率检测
-
-我们可以使用[simplecov](https://github.com/colszowka/simplecov/)库来检测我们编写的测试对于我们的项目是否完整，步骤如下：
-
-1. 在Gemfile文件中导入simplecov库：`gem 'simplecov', :require => false, :group => :test`，然后`bundle install`安装
-2. 在test/test_helper.rb的最前面加入simplecov的启动代码（这里默认使用rails自带的test框架，simplecov也支持其他测试框架如rspec，那么启动代码导入的位置请参考simplecov的官方文档）
-
-  ```
-  # 注意这里必须在 require rails/test_help 之前加入，否则不会生效
-  require 'simplecov'
-  SimpleCov.start 'rails'
-
-  ENV['RAILS_ENV'] ||= 'test'
-  require File.expand_path('../../config/environment', __FILE__)
-  require 'rails/test_help'
-
-  class ActiveSupport::TestCase
-    # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
-    fixtures :all
-
-    # Add more helper methods to be used by all tests here...
-  end
-  ```
-
-3. 运行`rake test`,成功后会根目录的coverage下生成一个index.html文件，用浏览器打开能看到结果如下：
-
-  <img src="/lib/screenshot5.png" width="700">  
-
-  <img src="/lib/screenshot6.png" width="700">  
-
-
-## Travis CI 线上自动测试
-
-上述为本地测试，我们可以使用Travis CI来实现自动测试，首先申请一个Travis CI的账号，然后与自己的github连接起来，接着在自己项目根目录中增加一个新的文件`.travis.yml`如下，这个文件中指定了测试需要的ruby版本，数据库等配置以及一些测试前的脚本操作，当你的github发生更新后，Travis CI会自动触发测试（需要你在Travis CI中自己设置自动/手动触发），然后读取你的`.travis.yml`文件配置进行测试，其实也就是把本地测试拉到服务器上进行，测试成功后会在你的github项目给一个buliding pass的标签（见CourseSelect题目旁边），代表当前的代码是通过测试的
-
-```
-language: ruby
-
-rvm:
-  - 2.2
-
-env:
-  - DB=pgsql
-
-services:
-  - postgresql
-
-script:
-  - RAILS_ENV=test bundle exec rake db:migrate --trace
-  - bundle exec rake db:test:prepare
-  - bundle exec rake
-
-before_script:
-  - cp config/database.yml.travis config/database.yml
-  - psql -c 'create database courseselect_test;' -U postgres
-```
-
-## How to Contribute
-
-先fork此项目，在分支修改后，pull request到主分支
-
-提问请到issues里创建，欢迎contributor！
-
-如果觉得好，给项目点颗星吧～
+>> <img src="/lib/邮件通知2.png" width="700"> 
 
 

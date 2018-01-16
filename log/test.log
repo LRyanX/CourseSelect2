@@ -1024,3 +1024,1459 @@ CoursesControllerTest: test_should_redirect_index_when_create
   [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
   [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
   [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (34.8ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddIsDegreeToGrades (20180106092715)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (418.0ms)[0m  [1mALTER TABLE "grades" ADD "is_degree" boolean DEFAULT 'f'[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ($1)  [["version", "20180106092715"]]
+  [1m[36m (22.0ms)[0m  [1mCOMMIT[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.2ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (2.3ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'courses'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[35m (1.6ms)[0m  SELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'grades'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+
+  [1m[36m (1.7ms)[0m  [1mSELECT t2.oid::regclass::text AS to_table, a1.attname AS column, a2.attname AS primary_key, c.conname AS name, c.confupdtype AS on_update, c.confdeltype AS on_delete
+FROM pg_constraint c
+JOIN pg_class t1 ON c.conrelid = t1.oid
+JOIN pg_class t2 ON c.confrelid = t2.oid
+JOIN pg_attribute a1 ON a1.attnum = c.conkey[1] AND a1.attrelid = t1.oid
+JOIN pg_attribute a2 ON a2.attnum = c.confkey[1] AND a2.attrelid = t2.oid
+JOIN pg_namespace t3 ON c.connamespace = t3.oid
+WHERE c.contype = 'f'
+  AND t1.relname = 'users'
+  AND t3.nspname = ANY (current_schemas(false))
+ORDER BY c.conname
+[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (11.2ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (59.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$byyIqk7ylwfYbbaOywr7WuXI1HSSg4hhyOj5gsKVi43fNBbgD4WvS', '2018-01-07 07:29:59', '2018-01-07 07:29:59', 751813785)[0m
+  [1m[35mFixture Delete (31.1ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (12.4ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:29:59', '2018-01-07 07:29:59', 980190962)[0m
+  [1m[35mFixture Insert (0.3ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:29:59', '2018-01-07 07:29:59', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:29:59', '2018-01-07 07:29:59', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 07:29:59', '2018-01-07 07:29:59', 281110143)
+  [1m[36m (18.1ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------
+CourseTest: test_shoud_be_valid
+-------------------------------
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$DtqaNsuQHOKW3wk3e6ehTOglwVf9qO/85O7XU9HaHa0s6KYJL9xIe', '2018-01-07 07:31:28', '2018-01-07 07:31:28', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:31:28', '2018-01-07 07:31:28', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:31:28', '2018-01-07 07:31:28', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:31:28', '2018-01-07 07:31:28', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 07:31:28', '2018-01-07 07:31:28', 281110143)
+  [1m[36m (15.1ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------
+CourseTest: test_shoud_be_valid
+-------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$WDK08kRXa9BVLB60hkasXuOHYgGDkvstMNlWenymDfbc0OXURULtG', '2018-01-07 07:35:37', '2018-01-07 07:35:37', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:35:37', '2018-01-07 07:35:37', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:35:37', '2018-01-07 07:35:37', 298486374)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:35:37', '2018-01-07 07:35:37', 113629430)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 07:35:37', '2018-01-07 07:35:37', 281110143)
+  [1m[36m (48.2ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+--------------------------------
+CourseTest: test_should_be_valid
+--------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+----------------------------------------
+CourseTest: test_name_should_be_present?
+----------------------------------------
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$eLNIjgNY1RQsN7H9n.br6OLs1hrLvSPY1v1QES7rOgw0EtLeJMN7O', '2018-01-07 07:38:07', '2018-01-07 07:38:07', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:38:07', '2018-01-07 07:38:07', 980190962)[0m
+  [1m[35mFixture Insert (0.6ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:38:07', '2018-01-07 07:38:07', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:38:07', '2018-01-07 07:38:07', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 07:38:07', '2018-01-07 07:38:07', 281110143)
+  [1m[36m (14.0ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+----------------------------------------------
+CourseTest: test_course_type_should_be_present
+----------------------------------------------
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+----------------------------------------
+CourseTest: test_name_should_be_present?
+----------------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+--------------------------------
+CourseTest: test_should_be_valid
+--------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$XFF1P7DqolwUiyAEq29.oe9MeWf.EtP70hk9Cs.flT.hzpZeD10KC', '2018-01-07 07:38:30', '2018-01-07 07:38:30', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:38:30', '2018-01-07 07:38:30', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:38:30', '2018-01-07 07:38:30', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:38:30', '2018-01-07 07:38:30', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 07:38:30', '2018-01-07 07:38:30', 281110143)
+  [1m[36m (13.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-----------------------------------
+UsersControllerTest: test_the_truth
+-----------------------------------
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------------
+SiteLayoutTest: test_homepage_layout_links
+------------------------------------------
+Started GET "/" for 127.0.0.1 at 2018-01-07 15:38:30 +0800
+Processing by HomesController#index as HTML
+  Rendered homes/index.html.erb within layouts/application (8181.3ms)
+Completed 500 Internal Server Error in 8192ms (ActiveRecord: 0.0ms)
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$0oDxs.XV3xb2yyokXK2D4.O3H4b3GZD4WN7ZdVjCrDr4lZ87ooFrC', '2018-01-07 07:53:11', '2018-01-07 07:53:11', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:53:11', '2018-01-07 07:53:11', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:53:11', '2018-01-07 07:53:11', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 07:53:11', '2018-01-07 07:53:11', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 07:53:11', '2018-01-07 07:53:11', 281110143)
+  [1m[36m (28.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+--------------------------------
+CourseTest: test_should_be_valid
+--------------------------------
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CourseTest: test_should_be_present?
+-----------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+------------------------------------
+CourseTest: test_should_be_too_long?
+------------------------------------
+  [1m[35m (0.0ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$1AJrxDEEnA0scLjnYTXVounecd6PvPawPp12cCpQ3cQAQZdUkbMm.', '2018-01-07 08:00:09', '2018-01-07 08:00:09', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:00:09', '2018-01-07 08:00:09', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:00:09', '2018-01-07 08:00:09', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:00:09', '2018-01-07 08:00:09', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 08:00:09', '2018-01-07 08:00:09', 281110143)
+  [1m[36m (34.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+------------------------------------------
+SiteLayoutTest: test_homepage_layout_links
+------------------------------------------
+Started GET "/" for 127.0.0.1 at 2018-01-07 16:00:09 +0800
+Processing by HomesController#index as HTML
+  Rendered homes/index.html.erb within layouts/application (2086.5ms)
+  Rendered layouts/_header.html.erb (3.2ms)
+  Rendered layouts/_content.html.erb (0.3ms)
+  Rendered layouts/_footer.html.erb (0.2ms)
+Completed 200 OK in 2113ms (Views: 2106.7ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$ZtwVq7VKpxVlqkts6uyON.js776C4b3/xN28Q8YxJk6/kFgUiRjUe', '2018-01-07 08:03:29', '2018-01-07 08:03:29', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:03:29', '2018-01-07 08:03:29', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:03:29', '2018-01-07 08:03:29', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:03:29', '2018-01-07 08:03:29', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 08:03:29', '2018-01-07 08:03:29', 281110143)
+  [1m[36m (19.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------------
+SiteLayoutTest: test_homepage_layout_links
+------------------------------------------
+Started GET "/" for 127.0.0.1 at 2018-01-07 16:03:29 +0800
+Processing by HomesController#index as HTML
+  Rendered homes/index.html.erb within layouts/application (158.2ms)
+  Rendered layouts/_header.html.erb (3.3ms)
+  Rendered layouts/_content.html.erb (0.3ms)
+  Rendered layouts/_footer.html.erb (0.2ms)
+Completed 200 OK in 186ms (Views: 179.8ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$UUPkK4S/9pPgERApZxCc5.9MVj7cIRgf.7KxpX.WRs/B80.3MDxl2', '2018-01-07 08:05:12', '2018-01-07 08:05:12', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:05:12', '2018-01-07 08:05:12', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:05:12', '2018-01-07 08:05:12', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:05:12', '2018-01-07 08:05:12', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 08:05:12', '2018-01-07 08:05:12', 281110143)
+  [1m[36m (15.2ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------------
+SiteLayoutTest: test_homepage_layout_links
+------------------------------------------
+Started GET "/" for 127.0.0.1 at 2018-01-07 16:05:12 +0800
+Processing by HomesController#index as HTML
+  Rendered homes/index.html.erb within layouts/application (152.1ms)
+  Rendered layouts/_header.html.erb (3.2ms)
+  Rendered layouts/_content.html.erb (0.3ms)
+  Rendered layouts/_footer.html.erb (17.0ms)
+Completed 200 OK in 197ms (Views: 181.8ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-----------------------------------
+UsersControllerTest: test_the_truth
+-----------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CourseTest: test_should_be_present?
+-----------------------------------
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------
+CourseTest: test_should_be_too_long?
+------------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+--------------------------------
+CourseTest: test_should_be_valid
+--------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------------------
+UserLoginTest: test_login_with_valid_information
+------------------------------------------------
+  [1m[35mUser Load (27.7ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+Started GET "/sessions/login" for 127.0.0.1 at 2018-01-07 16:05:13 +0800
+Processing by SessionsController#new as HTML
+  Rendered sessions/new.html.erb within layouts/application (3.6ms)
+  Rendered layouts/_header.html.erb (0.3ms)
+  Rendered layouts/_content.html.erb (0.1ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 7ms (Views: 7.0ms | ActiveRecord: 0.0ms)
+Started POST "/sessions/login?session%5Bemail%5D=admin%40test.com&session%5Bpassword%5D=[FILTERED]" for 127.0.0.1 at 2018-01-07 16:05:13 +0800
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"email"=>"admin@test.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT 1[0m  [["email", "admin@test.com"]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 5ms (ActiveRecord: 0.4ms)
+Started GET "/" for 127.0.0.1 at 2018-01-07 16:05:13 +0800
+Processing by HomesController#index as HTML
+  Rendered homes/index.html.erb within layouts/application (0.3ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+  Rendered layouts/_header.html.erb (1.2ms)
+  Rendered layouts/_content.html.erb (0.1ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.2ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+--------------------------------------
+UserTest: test_email_should_be_present
+--------------------------------------
+  [1m[36mUser Exists (0.5ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('     ') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------
+UserTest: test_should_be_valid
+------------------------------
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+-------------------------------------------
+UserTest: test_email_should_not_be_too_long
+-------------------------------------------
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------------------------------------------------------------------
+UserTest: test_email_addresses_should_be_unique_and_the_uppercase_will_be_converted_to_lowercase
+------------------------------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["name", "Example User"], ["email", "user@example.com"], ["password_digest", "$2a$04$3lUMB1zh0Qw7GPZKbuSY..5ZB8XAB50gT4nSfDuUcWDIgwShVwHs6"], ["created_at", "2018-01-07 08:05:13.125323"], ["updated_at", "2018-01-07 08:05:13.125323"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('USER@EXAMPLE.COM') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+-------------------------------------
+UserTest: test_name_should_be_present
+-------------------------------------
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+UserTest: test_email_validation_should_accept_valid_addresses
+-------------------------------------------------------------
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('USER@foo.COM') LIMIT 1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('A_US-ER@foo.bar.org') LIMIT 1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('first.last@foo.jp') LIMIT 1[0m
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('alice+bob@baz.cn') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+------------------------------------------
+UserTest: test_name_should_not_be_too_long
+------------------------------------------
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$bK5P.fpoxycmiT8fFgnF2uaQlAlj7iPj/BBVdvXOIbZuaamHROyTq', '2018-01-07 08:17:10', '2018-01-07 08:17:10', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:17:10', '2018-01-07 08:17:10', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:17:10', '2018-01-07 08:17:10', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:17:10', '2018-01-07 08:17:10', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 08:17:10', '2018-01-07 08:17:10', 281110143)
+  [1m[36m (30.2ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------------------
+UserLoginTest: test_login_with_valid_information
+------------------------------------------------
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+Started GET "/sessions/login" for 127.0.0.1 at 2018-01-07 16:17:10 +0800
+Processing by SessionsController#new as HTML
+  Rendered sessions/new.html.erb within layouts/application (4.0ms)
+  Rendered layouts/_header.html.erb (3.5ms)
+  Rendered layouts/_content.html.erb (0.4ms)
+  Rendered layouts/_footer.html.erb (0.2ms)
+Completed 200 OK in 200ms (Views: 193.9ms | ActiveRecord: 0.0ms)
+Started POST "/sessions/login?session%5Bemail%5D=admin%40test.com&session%5Bpassword%5D=[FILTERED]" for 127.0.0.1 at 2018-01-07 16:17:10 +0800
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"email"=>"admin@test.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT 1[0m  [["email", "admin@test.com"]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 5ms (ActiveRecord: 0.5ms)
+Started GET "/" for 127.0.0.1 at 2018-01-07 16:17:10 +0800
+Processing by HomesController#index as HTML
+  Rendered homes/index.html.erb within layouts/application (0.7ms)
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+  Rendered layouts/_header.html.erb (1.5ms)
+  Rendered layouts/_content.html.erb (0.1ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 6ms (Views: 5.3ms | ActiveRecord: 0.3ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+------------------------------------------
+SiteLayoutTest: test_homepage_layout_links
+------------------------------------------
+Started GET "/" for 127.0.0.1 at 2018-01-07 16:17:10 +0800
+Processing by HomesController#index as HTML
+  Rendered homes/index.html.erb within layouts/application (0.3ms)
+  Rendered layouts/_header.html.erb (0.4ms)
+  Rendered layouts/_content.html.erb (0.1ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 2ms (Views: 2.2ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+-----------------------------------
+UsersControllerTest: test_the_truth
+-----------------------------------
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+------------------------------------------------------------------------------------------------
+UserTest: test_email_addresses_should_be_unique_and_the_uppercase_will_be_converted_to_lowercase
+------------------------------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.4ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Example User"], ["email", "user@example.com"], ["password_digest", "$2a$04$8Sy8a8tNT54Eivvwo4u0EOmCsR/SmN0MNkT1WM0gNb6LATlkLfX5G"], ["created_at", "2018-01-07 08:17:10.618820"], ["updated_at", "2018-01-07 08:17:10.618820"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('USER@EXAMPLE.COM') LIMIT 1[0m
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+--------------------------------------
+UserTest: test_email_should_be_present
+--------------------------------------
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('     ') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+------------------------------
+UserTest: test_should_be_valid
+------------------------------
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+UserTest: test_email_validation_should_accept_valid_addresses
+-------------------------------------------------------------
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('USER@foo.COM') LIMIT 1[0m
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('A_US-ER@foo.bar.org') LIMIT 1
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('first.last@foo.jp') LIMIT 1[0m
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('alice+bob@baz.cn') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+------------------------------------------
+UserTest: test_name_should_not_be_too_long
+------------------------------------------
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-------------------------------------------
+UserTest: test_email_should_not_be_too_long
+-------------------------------------------
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+-------------------------------------
+UserTest: test_name_should_be_present
+-------------------------------------
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------
+CourseTest: test_should_be_too_long?
+------------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+--------------------------------
+CourseTest: test_should_be_valid
+--------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CourseTest: test_should_be_present?
+-----------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$6XnPoovmxakJjmgwAHW8lOvbtmJHukso7RxIaR3Dq3ZaDdYy7hQv.', '2018-01-07 08:17:55', '2018-01-07 08:17:55', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:17:55', '2018-01-07 08:17:55', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:17:55', '2018-01-07 08:17:55', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:17:55', '2018-01-07 08:17:55', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 08:17:55', '2018-01-07 08:17:55', 281110143)
+  [1m[36m (26.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------
+CourseTest: test_should_be_too_long?
+------------------------------------
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+--------------------------------
+CourseTest: test_should_be_valid
+--------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CourseTest: test_should_be_present?
+-----------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+UserTest: test_email_validation_should_accept_valid_addresses
+-------------------------------------------------------------
+  [1m[35mUser Exists (0.4ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('USER@foo.COM') LIMIT 1[0m
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('A_US-ER@foo.bar.org') LIMIT 1
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('first.last@foo.jp') LIMIT 1[0m
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('alice+bob@baz.cn') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+------------------------------------------------------------------------------------------------
+UserTest: test_email_addresses_should_be_unique_and_the_uppercase_will_be_converted_to_lowercase
+------------------------------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Example User"], ["email", "user@example.com"], ["password_digest", "$2a$04$ki9f6WroWx91Lx8JEAHVcO11NtfKcx5XuQvNHFYtOUdQ0WJRSAmSG"], ["created_at", "2018-01-07 08:17:55.406296"], ["updated_at", "2018-01-07 08:17:55.406296"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('USER@EXAMPLE.COM') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------
+UserTest: test_should_be_valid
+------------------------------
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+-------------------------------------------
+UserTest: test_email_should_not_be_too_long
+-------------------------------------------
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------------
+UserTest: test_name_should_not_be_too_long
+------------------------------------------
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+--------------------------------------
+UserTest: test_email_should_be_present
+--------------------------------------
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('     ') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------
+UserTest: test_name_should_be_present
+-------------------------------------
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 980190962]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 298486374]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 113629430]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 281110143]]
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+------------------------------------------------
+UserLoginTest: test_login_with_valid_information
+------------------------------------------------
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 751813785]]
+Started GET "/sessions/login" for 127.0.0.1 at 2018-01-07 16:17:55 +0800
+Processing by SessionsController#new as HTML
+  Rendered sessions/new.html.erb within layouts/application (4.0ms)
+  Rendered layouts/_header.html.erb (3.2ms)
+  Rendered layouts/_content.html.erb (0.3ms)
+  Rendered layouts/_footer.html.erb (0.2ms)
+Completed 200 OK in 203ms (Views: 196.9ms | ActiveRecord: 0.0ms)
+Started POST "/sessions/login?session%5Bemail%5D=admin%40test.com&session%5Bpassword%5D=[FILTERED]" for 127.0.0.1 at 2018-01-07 16:17:55 +0800
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"email"=>"admin@test.com", "password"=>"[FILTERED]"}}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT 1  [["email", "admin@test.com"]]
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://www.example.com/
+Completed 302 Found in 4ms (ActiveRecord: 0.3ms)
+Started GET "/" for 127.0.0.1 at 2018-01-07 16:17:55 +0800
+Processing by HomesController#index as HTML
+  Rendered homes/index.html.erb within layouts/application (0.6ms)
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 751813785]]
+  Rendered layouts/_header.html.erb (1.3ms)
+  Rendered layouts/_content.html.erb (0.1ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 5ms (Views: 4.7ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-----------------------------------
+UsersControllerTest: test_the_truth
+-----------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+------------------------------------------
+SiteLayoutTest: test_homepage_layout_links
+------------------------------------------
+Started GET "/" for 127.0.0.1 at 2018-01-07 16:17:55 +0800
+Processing by HomesController#index as HTML
+  Rendered homes/index.html.erb within layouts/application (0.4ms)
+  Rendered layouts/_header.html.erb (0.3ms)
+  Rendered layouts/_content.html.erb (0.1ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 2ms (Views: 1.9ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$yWbdgutyz.xA/eS/XXbgTumP0DxMKrbxSrM2gOB7dTJkic3o5WoTa', '2018-01-07 08:20:25', '2018-01-07 08:20:25', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:20:25', '2018-01-07 08:20:25', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:20:25', '2018-01-07 08:20:25', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:20:25', '2018-01-07 08:20:25', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 08:20:25', '2018-01-07 08:20:25', 281110143)
+  [1m[36m (17.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CourseTest: test_should_be_present?
+-----------------------------------
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------
+CourseTest: test_should_be_too_long?
+------------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+--------------------------------
+CourseTest: test_should_be_valid
+--------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-----------------------------------
+UsersControllerTest: test_the_truth
+-----------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+--------------------------------
+GradeTest: test_should_be_truth_
+--------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------------------
+UserLoginTest: test_login_with_valid_information
+------------------------------------------------
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+Started GET "/sessions/login" for 127.0.0.1 at 2018-01-07 16:20:26 +0800
+Processing by SessionsController#new as HTML
+  Rendered sessions/new.html.erb within layouts/application (4.0ms)
+  Rendered layouts/_header.html.erb (3.2ms)
+  Rendered layouts/_content.html.erb (0.3ms)
+  Rendered layouts/_footer.html.erb (0.2ms)
+Completed 200 OK in 200ms (Views: 194.6ms | ActiveRecord: 0.0ms)
+Started POST "/sessions/login?session%5Bemail%5D=admin%40test.com&session%5Bpassword%5D=[FILTERED]" for 127.0.0.1 at 2018-01-07 16:20:26 +0800
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"email"=>"admin@test.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT 1[0m  [["email", "admin@test.com"]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 5ms (ActiveRecord: 0.5ms)
+Started GET "/" for 127.0.0.1 at 2018-01-07 16:20:26 +0800
+Processing by HomesController#index as HTML
+  Rendered homes/index.html.erb within layouts/application (0.8ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+  Rendered layouts/_header.html.erb (1.3ms)
+  Rendered layouts/_content.html.erb (0.1ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 6ms (Views: 5.0ms | ActiveRecord: 0.2ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 980190962]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 298486374]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 113629430]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 281110143]]
+  [1m[36m (0.0ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+------------------------------------------
+SiteLayoutTest: test_homepage_layout_links
+------------------------------------------
+Started GET "/" for 127.0.0.1 at 2018-01-07 16:20:26 +0800
+Processing by HomesController#index as HTML
+  Rendered homes/index.html.erb within layouts/application (0.3ms)
+  Rendered layouts/_header.html.erb (0.3ms)
+  Rendered layouts/_content.html.erb (0.1ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 2ms (Views: 1.8ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+------------------------------------------
+UserTest: test_name_should_not_be_too_long
+------------------------------------------
+  [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+------------------------------
+UserTest: test_should_be_valid
+------------------------------
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+-------------------------------------------
+UserTest: test_email_should_not_be_too_long
+-------------------------------------------
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-------------------------------------
+UserTest: test_name_should_be_present
+-------------------------------------
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+-------------------------------------------------------------
+UserTest: test_email_validation_should_accept_valid_addresses
+-------------------------------------------------------------
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('USER@foo.COM') LIMIT 1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('A_US-ER@foo.bar.org') LIMIT 1[0m
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('first.last@foo.jp') LIMIT 1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('alice+bob@baz.cn') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+------------------------------------------------------------------------------------------------
+UserTest: test_email_addresses_should_be_unique_and_the_uppercase_will_be_converted_to_lowercase
+------------------------------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["name", "Example User"], ["email", "user@example.com"], ["password_digest", "$2a$04$Y3AoFPDo/qrwwhDyuuH5ZOhztCs0sp4vJcBCDH6kq9YNBcZiOFEbG"], ["created_at", "2018-01-07 08:20:26.433701"], ["updated_at", "2018-01-07 08:20:26.433701"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('USER@EXAMPLE.COM') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+--------------------------------------
+UserTest: test_email_should_be_present
+--------------------------------------
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('     ') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$SafnaNarQGSsuA7ekwP0K.WlbruP1I3yIiWRJfX2BnO5lV88zydQ.', '2018-01-07 08:22:13', '2018-01-07 08:22:13', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:22:13', '2018-01-07 08:22:13', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:22:13', '2018-01-07 08:22:13', 298486374)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:22:13', '2018-01-07 08:22:13', 113629430)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 08:22:13', '2018-01-07 08:22:13', 281110143)
+  [1m[36m (267.1ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+--------------------------------
+CourseTest: test_should_be_valid
+--------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+------------------------------------
+CourseTest: test_should_be_too_long?
+------------------------------------
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CourseTest: test_should_be_present?
+-----------------------------------
+  [1m[35m (0.0ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-----------------------------------
+UsersControllerTest: test_the_truth
+-----------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------------
+SiteLayoutTest: test_homepage_layout_links
+------------------------------------------
+Started GET "/" for 127.0.0.1 at 2018-01-07 16:22:13 +0800
+Processing by HomesController#index as HTML
+  Rendered homes/index.html.erb within layouts/application (237.2ms)
+  Rendered layouts/_header.html.erb (3.5ms)
+  Rendered layouts/_content.html.erb (0.3ms)
+  Rendered layouts/_footer.html.erb (0.2ms)
+Completed 200 OK in 258ms (Views: 252.3ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+--------------------------------
+GradeTest: test_should_be_truth_
+--------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------------------
+UserLoginTest: test_login_with_valid_information
+------------------------------------------------
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+Started GET "/sessions/login" for 127.0.0.1 at 2018-01-07 16:22:13 +0800
+Processing by SessionsController#new as HTML
+  Rendered sessions/new.html.erb within layouts/application (4.4ms)
+  Rendered layouts/_header.html.erb (0.3ms)
+  Rendered layouts/_content.html.erb (0.1ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 9ms (Views: 8.4ms | ActiveRecord: 0.0ms)
+Started POST "/sessions/login?session%5Bemail%5D=admin%40test.com&session%5Bpassword%5D=[FILTERED]" for 127.0.0.1 at 2018-01-07 16:22:13 +0800
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"email"=>"admin@test.com", "password"=>"[FILTERED]"}}
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT 1[0m  [["email", "admin@test.com"]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://www.example.com/
+Completed 302 Found in 5ms (ActiveRecord: 0.5ms)
+Started GET "/" for 127.0.0.1 at 2018-01-07 16:22:13 +0800
+Processing by HomesController#index as HTML
+  Rendered homes/index.html.erb within layouts/application (0.4ms)
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+  Rendered layouts/_header.html.erb (1.2ms)
+  Rendered layouts/_content.html.erb (0.1ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 3ms (Views: 2.9ms | ActiveRecord: 0.2ms)
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+------------------------------------------------------------------------------------------------
+UserTest: test_email_addresses_should_be_unique_and_the_uppercase_will_be_converted_to_lowercase
+------------------------------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.4ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Example User"], ["email", "user@example.com"], ["password_digest", "$2a$04$aUBfb9aKHjv7l6JZa.OfZeE6SpJdmlO2YGkm3zpSyDyJz05kxtLzK"], ["created_at", "2018-01-07 08:22:13.873758"], ["updated_at", "2018-01-07 08:22:13.873758"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('USER@EXAMPLE.COM') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-------------------------------------------
+UserTest: test_email_should_not_be_too_long
+-------------------------------------------
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+--------------------------------------
+UserTest: test_email_should_be_present
+--------------------------------------
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('     ') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+UserTest: test_email_validation_should_accept_valid_addresses
+-------------------------------------------------------------
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('USER@foo.COM') LIMIT 1[0m
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('A_US-ER@foo.bar.org') LIMIT 1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('first.last@foo.jp') LIMIT 1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('alice+bob@baz.cn') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+-------------------------------------
+UserTest: test_name_should_be_present
+-------------------------------------
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------------
+UserTest: test_name_should_not_be_too_long
+------------------------------------------
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+------------------------------
+UserTest: test_should_be_valid
+------------------------------
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.5ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$XFpBGd1zASN9wx47hn6uXOgj7UIgS9XJjLPf9wtt0/vfeAKgMY7Sy', '2018-01-07 08:34:09', '2018-01-07 08:34:09', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:34:09', '2018-01-07 08:34:09', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:34:09', '2018-01-07 08:34:09', 298486374)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:34:09', '2018-01-07 08:34:09', 113629430)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 08:34:09', '2018-01-07 08:34:09', 281110143)
+  [1m[36m (18.1ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+--------------------------------------------
+UsersControllerTest: test_should_create_user
+--------------------------------------------
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-----------------------------------
+UsersControllerTest: test_the_truth
+-----------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$9TLTtzPEE7DAArcdk3avmuzf245rBBH05dKm2sjWbddHqr76o2j/C', '2018-01-07 08:59:16', '2018-01-07 08:59:16', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:59:16', '2018-01-07 08:59:16', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:59:16', '2018-01-07 08:59:16', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 08:59:16', '2018-01-07 08:59:16', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 08:59:16', '2018-01-07 08:59:16', 281110143)
+  [1m[36m (113.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CourseTest: test_should_be_present?
+-----------------------------------
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------
+CourseTest: test_should_be_too_long?
+------------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+--------------------------------
+CourseTest: test_should_be_valid
+--------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$pzNFEcLQasWKKSB9AHR4EONAJaRYaxUH8DkMVcXub2VSl92g8J.Xm', '2018-01-07 09:00:04', '2018-01-07 09:00:04', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:00:04', '2018-01-07 09:00:04', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:00:04', '2018-01-07 09:00:04', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:00:04', '2018-01-07 09:00:04', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 09:00:04', '2018-01-07 09:00:04', 281110143)
+  [1m[36m (46.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$KcmcssfYGrk7mn7yPKxeAehNQHSwBQi15Ki49p.zq2C/Pc3OWT9PK', '2018-01-07 09:00:39', '2018-01-07 09:00:39', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:00:39', '2018-01-07 09:00:39', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:00:39', '2018-01-07 09:00:39', 298486374)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:00:39', '2018-01-07 09:00:39', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 09:00:39', '2018-01-07 09:00:39', 281110143)
+  [1m[36m (23.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.5ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$xwkMIJ0TRXocroBA6kISzOzzkRsdO2nOZ.oL5E0Sbc1wC6P8BtXuS', '2018-01-07 09:01:15', '2018-01-07 09:01:15', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:01:15', '2018-01-07 09:01:15', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:01:15', '2018-01-07 09:01:15', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:01:15', '2018-01-07 09:01:15', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 09:01:15', '2018-01-07 09:01:15', 281110143)
+  [1m[36m (16.1ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$rmEM91iORaI9FEu2phNzo.OYCPddzMduPZohFgGtVH7LrsbaogKsy', '2018-01-07 09:07:03', '2018-01-07 09:07:03', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:07:03', '2018-01-07 09:07:03', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:07:03', '2018-01-07 09:07:03', 298486374)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:07:03', '2018-01-07 09:07:03', 113629430)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 09:07:03', '2018-01-07 09:07:03', 281110143)
+  [1m[36m (27.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$1O6EF79P7WbUTVpT/cfMA.voauqfPU06fsDVJHcS0ucmbXVjkPZ0S', '2018-01-07 09:08:02', '2018-01-07 09:08:02', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:08:02', '2018-01-07 09:08:02', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:08:02', '2018-01-07 09:08:02', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:08:02', '2018-01-07 09:08:02', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 09:08:02', '2018-01-07 09:08:02', 281110143)
+  [1m[36m (212.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+--------------------------------
+CourseTest: test_should_be_valid
+--------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+------------------------------------
+CourseTest: test_should_be_too_long?
+------------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CourseTest: test_should_be_present?
+-----------------------------------
+  [1m[35m (0.0ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+--------------------------------------
+UserTest: test_email_should_be_present
+--------------------------------------
+  [1m[35mUser Exists (0.4ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('     ') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+------------------------------------------------------------------------------------------------
+UserTest: test_email_addresses_should_be_unique_and_the_uppercase_will_be_converted_to_lowercase
+------------------------------------------------------------------------------------------------
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Example User"], ["email", "user@example.com"], ["password_digest", "$2a$04$qW07V0gOxhUeadLSPj3mVu33CVNbcyQV36BUDkvk4ZKLSibw/PG52"], ["created_at", "2018-01-07 09:08:02.501546"], ["updated_at", "2018-01-07 09:08:02.501546"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('USER@EXAMPLE.COM') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-------------------------------------------
+UserTest: test_email_should_not_be_too_long
+-------------------------------------------
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+-------------------------------------------------------------
+UserTest: test_email_validation_should_accept_valid_addresses
+-------------------------------------------------------------
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('USER@foo.COM') LIMIT 1
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('A_US-ER@foo.bar.org') LIMIT 1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('first.last@foo.jp') LIMIT 1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('alice+bob@baz.cn') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+------------------------------
+UserTest: test_should_be_valid
+------------------------------
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+-------------------------------------
+UserTest: test_name_should_be_present
+-------------------------------------
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+------------------------------------------
+UserTest: test_name_should_not_be_too_long
+------------------------------------------
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+------------------------------------------------
+UserLoginTest: test_login_with_valid_information
+------------------------------------------------
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 751813785]]
+Started GET "/sessions/login" for 127.0.0.1 at 2018-01-07 17:08:02 +0800
+Processing by SessionsController#new as HTML
+  Rendered sessions/new.html.erb within layouts/application (9.8ms)
+  Rendered layouts/_header.html.erb (3.1ms)
+  Rendered layouts/_content.html.erb (0.3ms)
+  Rendered layouts/_footer.html.erb (0.2ms)
+Completed 200 OK in 195ms (Views: 189.4ms | ActiveRecord: 0.0ms)
+Started POST "/sessions/login?session%5Bemail%5D=admin%40test.com&session%5Bpassword%5D=[FILTERED]" for 127.0.0.1 at 2018-01-07 17:08:02 +0800
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"email"=>"admin@test.com", "password"=>"[FILTERED]"}}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT 1  [["email", "admin@test.com"]]
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://www.example.com/
+Completed 302 Found in 4ms (ActiveRecord: 0.3ms)
+Started GET "/" for 127.0.0.1 at 2018-01-07 17:08:02 +0800
+Processing by HomesController#index as HTML
+  Rendered homes/index.html.erb within layouts/application (0.6ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 751813785]]
+  Rendered layouts/_header.html.erb (1.2ms)
+  Rendered layouts/_content.html.erb (0.1ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 5ms (Views: 4.4ms | ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+------------------------------------------
+SiteLayoutTest: test_homepage_layout_links
+------------------------------------------
+Started GET "/" for 127.0.0.1 at 2018-01-07 17:08:02 +0800
+Processing by HomesController#index as HTML
+  Rendered homes/index.html.erb within layouts/application (0.3ms)
+  Rendered layouts/_header.html.erb (0.3ms)
+  Rendered layouts/_content.html.erb (0.1ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 2ms (Views: 1.7ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+--------------------------------
+GradeTest: test_should_be_truth_
+--------------------------------
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+-----------------------------------
+UsersControllerTest: test_the_truth
+-----------------------------------
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 751813785]]
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$J3Jp5tWxEejQQb5Tp.vSKOitbrcQ1L14XZC2zJ4O26lAYppGSiB9u', '2018-01-07 09:27:19', '2018-01-07 09:27:19', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:27:19', '2018-01-07 09:27:19', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:27:19', '2018-01-07 09:27:19', 298486374)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:27:19', '2018-01-07 09:27:19', 113629430)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 09:27:19', '2018-01-07 09:27:19', 281110143)
+  [1m[36m (341.3ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$I/NWoSiaw2iDHoFSVFjlGOIuCAmHaJP020R5r/FWHM2GVnDa/64.G', '2018-01-07 09:27:50', '2018-01-07 09:27:50', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:27:50', '2018-01-07 09:27:50', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:27:50', '2018-01-07 09:27:50', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:27:50', '2018-01-07 09:27:50', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 09:27:50', '2018-01-07 09:27:50', 281110143)
+  [1m[36m (107.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$Nrbjmdl6Nd35Sp/ggh.SPuw05vxG.01CncyxqJhGywNiXMKGU5bZG', '2018-01-07 09:29:10', '2018-01-07 09:29:10', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:29:10', '2018-01-07 09:29:10', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:29:10', '2018-01-07 09:29:10', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:29:10', '2018-01-07 09:29:10', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 09:29:10', '2018-01-07 09:29:10', 281110143)
+  [1m[36m (18.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.1ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$OxiWp31yqEafPUPCNOTJdO4ZJ683iNXsHaP3AHLfLLxd2mVy9h4o.', '2018-01-07 09:30:11', '2018-01-07 09:30:11', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:30:11', '2018-01-07 09:30:11', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:30:11', '2018-01-07 09:30:11', 298486374)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:30:11', '2018-01-07 09:30:11', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 09:30:11', '2018-01-07 09:30:11', 281110143)
+  [1m[36m (21.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$zb345equhvUTx7E0KVo3ne3hd.bNMwSe2EhqfCBJ01klbMBuu0Gim', '2018-01-07 09:30:35', '2018-01-07 09:30:35', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:30:35', '2018-01-07 09:30:35', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:30:35', '2018-01-07 09:30:35', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:30:35', '2018-01-07 09:30:35', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 09:30:35', '2018-01-07 09:30:35', 281110143)
+  [1m[36m (14.9ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$CA1LnGodDu35ZDZjyPOjCu9ZJdwxHXvtYInSRbiS6LcxGLOEuScvu', '2018-01-07 09:30:52', '2018-01-07 09:30:52', 751813785)[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:30:52', '2018-01-07 09:30:52', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:30:52', '2018-01-07 09:30:52', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:30:52', '2018-01-07 09:30:52', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 09:30:52', '2018-01-07 09:30:52', 281110143)
+  [1m[36m (16.6ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.3ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.3ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL;ALTER TABLE "courses" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "grades" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at", "id") VALUES ('彭兆卿', 'admin@test.com', '$2a$04$BK2hziggiuoIjFhesscJzuwvFGCN.jSQAK5zC82vrO19rJODq7u4u', '2018-01-07 09:33:03', '2018-01-07 09:33:03', 751813785)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "courses"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('计算机体系结构', '专业核心课', '60/3.0', '第2-20周', '周一(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:33:03', '2018-01-07 09:33:03', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4002H', '计算机网络', '专业核心课', '60/3.0', '第2-20周五', '周五(2-4)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:33:03', '2018-01-07 09:33:03', 298486374)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M4043H', '高级人工智能', '专业核心课', '60/3.0', '第2-20周二', '周二(9-11)', '教1-107', '课堂讲授为主', '闭卷笔试', '2018-01-07 09:33:03', '2018-01-07 09:33:03', 113629430)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "courses" ("course_code", "name", "course_type", "credit", "course_week", "course_time", "class_room", "teaching_type", "exam_type", "created_at", "updated_at", "id") VALUES ('091M5001H', 'VLSI测试与可测试性设计', '专业普及课', '40/2.0', '第2-16周二', '周二(9-11)', '教1-109', '课堂讲授为主', '课堂开卷', '2018-01-07 09:33:03', '2018-01-07 09:33:03', 281110143)
+  [1m[36m (19.2ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "courses" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "grades" ENABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-------------------------------------------------------------
+CoursesControllerTest: test_should_redirect_index_when_create
+-------------------------------------------------------------
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 980190962]]
+  [1m[36mCourse Load (0.2ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 298486374]]
+  [1m[35mCourse Load (0.2ms)[0m  SELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1  [["id", 113629430]]
+  [1m[36mCourse Load (0.1ms)[0m  [1mSELECT  "courses".* FROM "courses" WHERE "courses"."id" = $1 LIMIT 1[0m  [["id", 281110143]]
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+------------------------------------------------
+UserLoginTest: test_login_with_valid_information
+------------------------------------------------
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 751813785]]
+Started GET "/sessions/login" for 127.0.0.1 at 2018-01-07 17:33:03 +0800
+Processing by SessionsController#new as HTML
+  Rendered sessions/new.html.erb within layouts/application (4.1ms)
+  Rendered layouts/_header.html.erb (3.2ms)
+  Rendered layouts/_content.html.erb (0.3ms)
+  Rendered layouts/_footer.html.erb (0.2ms)
+Completed 200 OK in 191ms (Views: 185.3ms | ActiveRecord: 0.0ms)
+Started POST "/sessions/login?session%5Bemail%5D=admin%40test.com&session%5Bpassword%5D=[FILTERED]" for 127.0.0.1 at 2018-01-07 17:33:03 +0800
+Processing by SessionsController#create as HTML
+  Parameters: {"session"=>{"email"=>"admin@test.com", "password"=>"[FILTERED]"}}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT 1  [["email", "admin@test.com"]]
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://www.example.com/
+Completed 302 Found in 5ms (ActiveRecord: 0.4ms)
+Started GET "/" for 127.0.0.1 at 2018-01-07 17:33:03 +0800
+Processing by HomesController#index as HTML
+  Rendered homes/index.html.erb within layouts/application (0.7ms)
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1[0m  [["id", 751813785]]
+  Rendered layouts/_header.html.erb (1.4ms)
+  Rendered layouts/_content.html.erb (0.1ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 6ms (Views: 5.0ms | ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+-----------------------------------
+UsersControllerTest: test_the_truth
+-----------------------------------
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT 1  [["id", 751813785]]
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+--------------------------------------
+UserTest: test_email_should_be_present
+--------------------------------------
+  [1m[36mUser Exists (0.4ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('     ') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------------
+UserTest: test_name_should_not_be_too_long
+------------------------------------------
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+-------------------------------------------------------------
+UserTest: test_email_validation_should_accept_valid_addresses
+-------------------------------------------------------------
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('USER@foo.COM') LIMIT 1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('A_US-ER@foo.bar.org') LIMIT 1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('first.last@foo.jp') LIMIT 1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('alice+bob@baz.cn') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+------------------------------------------------------------------------------------------------
+UserTest: test_email_addresses_should_be_unique_and_the_uppercase_will_be_converted_to_lowercase
+------------------------------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("name", "email", "password_digest", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["name", "Example User"], ["email", "user@example.com"], ["password_digest", "$2a$04$d1FYQZZexkKOkgQi3grzxOJhZ/XET.54mWD/eYpIRgoAAuBjx3Ny6"], ["created_at", "2018-01-07 09:33:04.099874"], ["updated_at", "2018-01-07 09:33:04.099874"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.2ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('USER@EXAMPLE.COM') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+------------------------------
+UserTest: test_should_be_valid
+------------------------------
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-------------------------------------------
+UserTest: test_email_should_not_be_too_long
+-------------------------------------------
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com') LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  BEGIN
+-------------------------------------
+UserTest: test_name_should_be_present
+-------------------------------------
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('user@example.com') LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CourseTest: test_should_be_present?
+-----------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+------------------------------------
+CourseTest: test_should_be_too_long?
+------------------------------------
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+--------------------------------
+CourseTest: test_should_be_valid
+--------------------------------
+  [1m[35m (0.0ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+--------------------------------
+GradeTest: test_should_be_truth_
+--------------------------------
+  [1m[35m (0.0ms)[0m  ROLLBACK
+  [1m[36m (0.0ms)[0m  [1mBEGIN[0m
+------------------------------------------
+SiteLayoutTest: test_homepage_layout_links
+------------------------------------------
+Started GET "/" for 127.0.0.1 at 2018-01-07 17:33:04 +0800
+Processing by HomesController#index as HTML
+  Rendered homes/index.html.erb within layouts/application (0.4ms)
+  Rendered layouts/_header.html.erb (0.4ms)
+  Rendered layouts/_content.html.erb (0.1ms)
+  Rendered layouts/_footer.html.erb (0.0ms)
+Completed 200 OK in 2ms (Views: 2.3ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.1ms)[0m  ROLLBACK
