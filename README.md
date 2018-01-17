@@ -97,7 +97,9 @@
 
 >>功能截图如下：<br>
 
->> <img src="/lib/add_student.png" width="700">
+>> <img src="/lib/add_student1.png" width="700">
+
+>> <img src="/lib/add_student2.png" width="700">
 
 * 教师为自己的学生推荐课程
 
@@ -105,6 +107,16 @@
 
 >>功能截图如下：<br>
 
->> <img src="/lib/advise.png" width="700">
+>> <img src="/lib/advise1.png" width="700">
+
+>> <img src="/lib/advise2.png" width="700">
+
+>>如果教师不拥有学生的话，则无法进行推荐课程，也无法查看已建议课程.此时点击建议课程，进入推荐课程后，点击推荐课程会显示
+
+>> <img src="/lib/warning1.png" width="700">
+
+>>此时点击已建议课程，会显示
+
+>> <img src="/lib/warning2.png" width="700">
 
 
