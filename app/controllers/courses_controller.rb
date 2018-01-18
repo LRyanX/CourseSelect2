@@ -17,9 +17,16 @@ class CoursesController < ApplicationController
 		if @course.save
      mail_body=current_user.name+"老师,您好！您已成功申请："+@course.name+"课程，可以开放选课了！"
 			require 'mail'
-		  smtp = { :address => 'smtp.163.com', :port => 25, :domain => '163.com', \
-						   :user_name => 'ucas_courseselect@163.com', :password => 'password123',\
-						   :enable_starttls_auto => true, :openssl_verify_mode => 'none' }
+		  smtp = { 
+							 :address => 'smtp.163.com',
+			         :port => 25, 
+							 :domain => '163.com',
+						   :user_name => 'ucas_courseselect',
+							 :password => 'password123',
+						   :enable_starttls_auto => true,
+							 #:openssl_verify_mode => 'none'
+						   :authentication       => 'login'
+						 }
 			Mail.defaults { delivery_method :smtp, smtp }
 			mail = Mail.new do
 		  from 'ucas_courseselect@163.com'
@@ -71,9 +78,16 @@ class CoursesController < ApplicationController
     
 		mail_body=current_user.name+"老师,您好！您已删除："+@course.name+"课程！"
    require 'mail'
-	  smtp = { :address => 'smtp.163.com', :port => 25, :domain => '163.com', \
-	           :user_name => 'ucas_courseselect@163.com', :password => 'password123',\
-		         :enable_starttls_auto => true, :openssl_verify_mode => 'none' }
+	  smtp = { 
+						 :address => 'smtp.163.com',
+		         :port => 25, 
+						 :domain => '163.com',
+	           :user_name => 'ucas_courseselect',
+						 :password => 'password123',
+		         :enable_starttls_auto => true, 
+						 #:openssl_verify_mode => 'none'
+						 :authentication       => 'login'
+					 }
 		Mail.defaults { delivery_method :smtp, smtp }
 	  mail = Mail.new do
 		from 'ucas_courseselect@163.com'
@@ -381,9 +395,16 @@ class CoursesController < ApplicationController
 
 		mail_body=current_user.name+"同学,您好！您已成功退选"+@course.name+"课程，可以在课程网站中查询您的最新课表！"
 		require 'mail'
-		smtp = { :address => 'smtp.163.com', :port => 25, :domain => '163.com', \
-	           :user_name => 'ucas_courseselect@163.com', :password => 'password123',\
-	           :enable_starttls_auto => true, :openssl_verify_mode => 'none' } 
+		smtp = {
+						 :address => 'smtp.163.com', 
+						 :port => 25, 
+						 :domain => '163.com',
+	           :user_name => 'ucas_courseselect',
+						 :password => 'password123',
+	           :enable_starttls_auto => true,
+						 #:openssl_verify_mode => 'none'
+						 :authentication       => 'login'
+					 } 
 						  Mail.defaults { delivery_method :smtp, smtp }
 		mail = Mail.new do
 		from 'ucas_courseselect@163.com'
@@ -524,9 +545,15 @@ class CoursesController < ApplicationController
 #-------------------发送邮件部分-----------------------------------------------------
 			mail_body=current_user.name+"同学,您好！您已成功提交选课，可以在课程网站中查询您的最新课表！"
 			require 'mail'
-			smtp = { :address => 'smtp.163.com', :port => 25, :domain => '163.com', \
-			 				 :user_name => 'ucas_courseselect@163.com', :password => 'password123',\
-  						 :enable_starttls_auto => true, :openssl_verify_mode => 'none' }
+			smtp = { :address => 'smtp.163.com', 
+			         :port => 25, 
+							 :domain => '163.com',
+			 				 :user_name => 'ucas_courseselect', 
+							 :password => 'password123',
+  						 :enable_starttls_auto => true, 
+							 :authentication       => 'login'
+							 #:openssl_verify_mode => 'none'
+						 }
 			Mail.defaults { delivery_method :smtp, smtp }
 			mail = Mail.new do
 	  	from 'ucas_courseselect@163.com'
