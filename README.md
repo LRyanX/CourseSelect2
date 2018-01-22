@@ -135,12 +135,12 @@
 ## 部署简介：
 项目在阿里云服务器上采用passenger+nginx框架进行部署，下面对部署过程进行简单介绍。<br>
 
-* 1.服务器ruby on rail环境配置
+1.服务器ruby on rail环境配置
 
 >在服务器中配置与本地相同的开发环境；<br>
 >ps：注意ruby版本的差别，可以用```rvm list``` 查看现在使用的ruby版本；
 
-* 2.配置passenger+nginx环境
+2.配置passenger+nginx环境
 
 >Nginx是HTTP服务器，运行nginx类似于本地开启rails server，才能实现网站的访问，首先安装passenger：<br>
 >```gem install passenger```<br>
@@ -151,7 +151,7 @@
 >最后配置nginx配置文件,将root目录设置为自己的项目public文件夹的地址。<br>
 >(详细的配置过程可以参阅https://ruby-china.org/topics/32851 )<br>
 
-* 3.运行nginx服务器
+3.运行nginx服务器
 
 >启动nginx服务器，便能够通过本地服务器地址访问到我们的工程啦！http://47.94.149.173/ <br>
 >```sudo  /opt/nginx/sbin/nginx```<br>
