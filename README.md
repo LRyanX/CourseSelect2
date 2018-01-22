@@ -1,7 +1,7 @@
 # CourseSelect 
 
 此github项目为国科大研究生课程（高级软件工程）的课程作业，由李嘉禛和刘旭在原有选课系统样本的基础上进行更新改进完成，增添了部分功能，在完成改进的过程中，小组成员对Ruby on Rail这一web应用开发框架有了更好的认识。<br>
-此项目部署至阿里云服务器，可以访问 http://47.94.149.173/ 进行浏览，由于域名需要申请备案，暂时无法启用（micreven.top）。<br>
+此项目部署至阿里云服务器，可以访问 http://47.94.149.173/ 进行浏览，由于域名需要申请备案，暂时无法启用(micreven.top)。<br>
 
 ## 原有功能功能：
 
@@ -133,6 +133,26 @@
 >> <img src="/lib/warning2.png" width="700">
 
 ## 部署简介：
+项目在阿里云服务器上采用passenger+nginx框架进行部署，下面对部署过程进行简单介绍。<br>
+
+* 1.服务器ruby on rail环境配置
+
+>在服务器中配置与本地相同的开发环境；<br>
+>ps：注意ruby版本的差别，可以用```rvm list``` 查看现在使用的ruby版本；
+
+* 2.配置passenger+nginx环境
+
+>Nginx是HTTP服务器，运行nginx类似于本地开启rails server，才能实现网站的访问，首先安装passenger：<br>
+>```gem install passenger```<br>
+>接着通过source编译的方式安装nginx：<br>
+>```rvmsudo passenger-install-install-nginx-module```<br>
+>最后配置nginx配置文件,将root目录设置为自己的项目public文件夹的地址。<br>
+>详细的配置过程可以参阅https://ruby-china.org/topics/32851 <br>
+
+* 3.运行nginx服务器
+
+>启动nginx服务器，便能够通过本地服务器地址访问到我们的工程啦！<br>
+>```sudo sudo /opt/nginx/sbin/nginx```<br>
 
 
 
