@@ -144,15 +144,17 @@
 
 >Nginx是HTTP服务器，运行nginx类似于本地开启rails server，才能实现网站的访问，首先安装passenger：<br>
 >```gem install passenger```<br>
+
 >接着通过source编译的方式安装nginx：<br>
 >```rvmsudo passenger-install-install-nginx-module```<br>
+
 >最后配置nginx配置文件,将root目录设置为自己的项目public文件夹的地址。<br>
->详细的配置过程可以参阅https://ruby-china.org/topics/32851 <br>
+>(详细的配置过程可以参阅https://ruby-china.org/topics/32851 )<br>
 
 * 3.运行nginx服务器
 
->启动nginx服务器，便能够通过本地服务器地址访问到我们的工程啦！<br>
->```sudo sudo /opt/nginx/sbin/nginx```<br>
+>启动nginx服务器，便能够通过本地服务器地址访问到我们的工程啦！http://47.94.149.173/ <br>
+>```sudo  /opt/nginx/sbin/nginx```<br>
 
 
 
